@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Kids Play Zone | Indoor Play Area for Children</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="description" content="Safe, fun indoor play center with zones for every age. Birthday parties, open play, and more." />
+    <meta name="keywords" content="indoor play area, kids play zone, children's playground, birthday parties, soft play" />
+    <meta name="author" content="Kids Play Zone" />
+
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-brown': '#8D6E63',
+                        'secondary-green': '#4CAF50',
+                        'accent-orange': '#82736e',
+                        'background-cream': '#FAF5EF',
+                        'neutral-dark': '#5D4037',
+                        'neutral-light': '#EFEBE9',
+                        'dark-bg': '#1a1a1a',
+                        'dark-card': '#2d2d2d'
+                    },
+                    fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        'display': ['Outfit', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('/assets/kids-hero.jpg')",
+                        'feature-pattern': "radial-gradient(circle at 20% 50%, rgba(141, 110, 99, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 50%)"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        /* --- REFERENCE COLORS, NEW STRUCTURE --- */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+        }
+        body {
+            background-color: #FAF5EF;
+            color: #5D4037;
+            scroll-behavior: smooth;
+        }
+        .dark body {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+        body::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* --- NEW FUN CARD STYLE --- */
+        .play-card {
+            background: white;
+            border-radius: 32px 32px 32px 32px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 30px rgba(141, 110, 99, 0.08);
+            border: 1px solid rgba(141, 110, 99, 0.10);
+        }
+        .dark .play-card {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+        .play-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(141, 110, 99, 0.18);
+        }
+
+        /* --- BUTTONS (reference colors) --- */
+        .btn-brown {
+            background: #8D6E63;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(141, 110, 99, 0.25);
+        }
+        .btn-brown:hover {
+            background: #6D4C41;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(141, 110, 99, 0.35);
+        }
+
+        .btn-outline-brown {
+            background: transparent;
+            color: #8D6E63;
+            border: 2px solid #8D6E63;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-outline-brown:hover {
+            background: #8D6E63;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* --- NAVIGATION (new simpler style, same colors) --- */
+        .nav-link {
+            position: relative;
+            font-weight: 500;
+            color: #5D4037;
+            transition: color 0.2s;
+            padding: 0.25rem 0;
+        }
+        .dark .nav-link { color: #d1d5db; }
+        .nav-link:hover { color: #8D6E63; }
+        .nav-link.active { color: #8D6E63; font-weight: 600; }
+
+        /* --- MOBILE MENU (simplified & aligned) --- */
+        .mobile-menu {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .dark .mobile-menu { background: #1a1a1a; border-color: #374151; }
+        .mobile-menu.open { max-height: 85vh; overflow-y: auto; }
+        .mobile-link {
+            display: block;
+            padding: 0.875rem 1.5rem;
+            font-weight: 500;
+            color: #5D4037;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .dark .mobile-link { color: #d1d5db; border-bottom-color: #374151; }
+        .mobile-link:hover { background: #f9fafb; color: #8D6E63; }
+        .dark .mobile-link:hover { background: #374151; }
+        .mobile-link.active {
+            color: #8D6E63 !important;
+            font-weight: 700 !important;
+            background: rgba(141, 110, 99, 0.12) !important;
+            border-left: 4px solid #8D6E63 !important;
+            padding-left: 1.25rem !important;
+        }
+        .dark .mobile-link.active {
+            color: #ffffff !important;
+            background: rgba(141, 110, 99, 0.25) !important;
+            border-left-color: #8D6E63 !important;
+        }
+
+        /* --- HERO (new layout, same overlay) --- */
+        .hero-kids {
+            background-image: linear-gradient(135deg, rgba(25, 18, 15, 0.75) 0%, rgba(60, 42, 35, 0.70) 100%), url('assets/hero_bg_index.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .dark .hero-kids {
+            background-image: linear-gradient(135deg, rgba(15, 10, 8, 0.88) 0%, rgba(30, 18, 14, 0.92) 100%), url('assets/hero_bg_index.jpg');
+        }
+
+        /* --- FEATURE ICON (new shape) --- */
+        .feature-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* --- BADGE (new style) --- */
+        .age-badge {
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- SOCIAL ICONS (same as reference) --- */
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #EFEBE9;
+            color: #5D4037;
+            transition: all 0.3s ease;
+        }
+        .dark .social-icon { background: #374151; color: #e5e5e5; }
+        .social-icon:hover { background: #8D6E63; color: white; transform: translateY(-3px); }
+
+        /* --- FOOTER (same colors, new layout) --- */
+        footer { background: #EFEBE9; color: #5D4037; }
+        .dark footer { background: #1a1a1a; color: #e5e5e5; }
+        footer a:hover { color: #8D6E63; }
+        footer .border-t { border-color: #d7ccc8; }
+        .dark footer .border-t { border-color: #404040; }
+
+        .toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #EFEBE9;
+            color: #5D4037;
+            border: 1.5px solid #d7ccc8;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+        .dark .toggle-btn { background: #2d2d2d; color: #ffffff; border-color: #4b5563; }
+        .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(141,110,99,0.3); }
+        .dark .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; }
+        .toggle-btn.active { background: #8D6E63; color: white; }
+
+        .auth-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .auth-btn.login { background: transparent; border-color: #d7ccc8; color: #5D4037; }
+        .dark .auth-btn.login { border-color: #4b5563; color: #d1d5db; }
+        .auth-btn.login:hover { border-color: #8D6E63; color: #8D6E63; }
+        .auth-btn.signup { background: #8D6E63; color: white; }
+        .auth-btn.signup:hover { background: #6D4C41; transform: translateY(-2px); }
+
+        .mobile-auth-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin: 0.25rem;
+            border: 1px solid transparent;
+        }
+        .mobile-auth-btn.login { background: transparent; border-color: #d7ccc8; color: #5D4037; }
+        .dark .mobile-auth-btn.login { border-color: #4b5563; color: #d1d5db; }
+        .mobile-auth-btn.login:hover { background: #8D6E63; color: white; border-color: #8D6E63; }
+        .mobile-auth-btn.signup { background: #8D6E63; color: white; }
+        .mobile-auth-btn.signup:hover { background: #6D4C41; }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION (new structure, reference colors) ===== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-neutral-light dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a class="flex items-center space-x-3 group" href="index.html">
+                    <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fas fa-child text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-display font-bold tracking-tight text-neutral-dark dark:text-white">Kids</span>
+                        <span class="text-2xl font-display font-bold tracking-tight text-primary-brown">Zone</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden xl:flex items-center space-x-8">
+                    <!-- Home Dropdown -->
+                    <div class="relative group py-2">
+                        <button class="nav-link active flex items-center gap-1.5 focus:outline-none cursor-pointer">
+                            <span>Home</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-1 w-40 hidden group-hover:block z-50">
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-neutral-light dark:border-gray-700 py-2 overflow-hidden backdrop-blur-md">
+                                <a href="index.html" class="flex items-center justify-between px-4 py-2 text-sm font-bold bg-primary-brown/10 dark:bg-primary-brown/20 text-primary-brown transition-colors">
+                                    <span>Home 1</span>
+                                    <i class="fas fa-check text-xs text-primary-brown"></i>
+                                </a>
+                                <a href="home2.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Home 2
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-link" href="about.html">About</a>
+                    <a class="nav-link" href="zones.html">Play Zones</a>
+                    <a class="nav-link" href="safety.html">Safety</a>
+                    <a class="nav-link" href="parties.html">Parties</a>
+
+                    <!-- Dashboard Dropdown -->
+                    <div class="relative group py-2">
+                        <button class="nav-link flex items-center gap-1.5 focus:outline-none cursor-pointer">
+                            <span>Dashboard</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-1 w-40 hidden group-hover:block z-50">
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-neutral-light dark:border-gray-700 py-2 overflow-hidden backdrop-blur-md">
+                                <a href="client.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Client
+                                </a>
+                                <a href="admin.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Admin
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-link" href="contact.html">Contact</a>
+                    <div class="flex gap-2 ml-4">
+                        <button id="theme-toggle" class="toggle-btn" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun hidden"></i>
+                        </button>
+                        <button id="rtl-toggle" class="toggle-btn" title="Toggle RTL/LTR">⇄</button>
+                    </div>
+                    <div class="flex items-center gap-3 ml-2">
+                        <a class="auth-btn login" href="login.html">Login</a>
+                        <a class="auth-btn signup" href="signup.html">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="mobile-toggle" class="xl:hidden text-neutral-dark dark:text-gray-300 p-2 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Full Width Alignment) -->
+        <div id="mobile-menu" class="mobile-menu xl:hidden">
+            <div class="px-4 sm:px-6 py-2">
+                <!-- Mobile Home Dropdown -->
+                <div class="border-b border-gray-100 dark:border-gray-800">
+                    <button onclick="document.getElementById('mobile-home-dropdown').classList.toggle('hidden'); document.getElementById('mobile-home-arrow').classList.toggle('rotate-180')" class="mobile-link active w-full flex items-center justify-between text-left cursor-pointer border-none bg-transparent">
+                        <span>Home</span>
+                        <i id="mobile-home-arrow" class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="mobile-home-dropdown" class="hidden bg-neutral-100/60 dark:bg-gray-800/60 rounded-xl my-1 overflow-hidden">
+                        <a class="mobile-link active py-2.5 pl-8 text-sm block border-none" href="index.html">
+                            Home 1
+                        </a>
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="home2.html">
+                            Home 2
+                        </a>
+                    </div>
+                </div>
+
+                <a class="mobile-link" href="about.html">About</a>
+                <a class="mobile-link" href="zones.html">Play Zones</a>
+                <a class="mobile-link" href="safety.html">Safety</a>
+                <a class="mobile-link" href="parties.html">Parties</a>
+
+                <!-- Mobile Dashboard Dropdown -->
+                <div class="border-b border-gray-100 dark:border-gray-800">
+                    <button onclick="document.getElementById('mobile-dash-dropdown').classList.toggle('hidden'); document.getElementById('mobile-dash-arrow').classList.toggle('rotate-180')" class="mobile-link w-full flex items-center justify-between text-left cursor-pointer border-none bg-transparent">
+                        <span>Dashboard</span>
+                        <i id="mobile-dash-arrow" class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="mobile-dash-dropdown" class="hidden bg-neutral-100/60 dark:bg-gray-800/60 rounded-xl my-1 overflow-hidden">
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="client.html">
+                            Client
+                        </a>
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="admin.html">
+                            Admin
+                        </a>
+                    </div>
+                </div>
+
+                <a class="mobile-link" href="contact.html">Contact</a>
+                <div class="flex flex-col sm:flex-row gap-3 py-6">
+                    <a class="mobile-auth-btn login flex-1 text-center" href="login.html">Login</a>
+                    <a class="mobile-auth-btn signup flex-1 text-center" href="signup.html">Sign Up</a>
+                </div>
+                <div class="flex justify-center gap-3 py-4 border-t border-gray-200 dark:border-gray-800">
+                    <button id="theme-toggle-mobile" class="toggle-btn"><i class="fas fa-moon"></i><i class="fas fa-sun hidden"></i></button>
+                    <button id="rtl-toggle-mobile" class="toggle-btn">⇄</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO (new layout) ===== -->
+    <section class="hero-kids text-white pt-36 pb-24 md:pt-44 md:pb-32">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center animate-slide-up">
+                <span class="inline-block px-5 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-star text-yellow-300 mr-2"></i> Where Fun &amp; Safety Meet
+                </span>
+                <h1 class="text-5xl md:text-7xl font-display font-extrabold leading-tight mb-6 drop-shadow-md text-white">
+                    Big <span class="text-amber-300 font-extrabold">Adventures</span><br />for Little <span class="text-green-400 font-extrabold">Explorers</span>
+                </h1>
+                <p class="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto mb-10">
+                    Indoor play zones designed for curious minds, active bodies, and endless smiles.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#zones" class="btn-brown px-8 py-4 text-lg"><i class="fas fa-rocket mr-2"></i> Explore Zones</a>
+                    <a href="#book" class="bg-white text-primary-brown font-bold px-8 py-4 rounded-full hover:bg-neutral-light transition shadow-lg"><i class="fas fa-calendar-check mr-2"></i> Book a Visit</a>
+                </div>
+                <div class="mt-12 flex flex-wrap justify-center gap-10 text-sm font-medium">
+                    <span><i class="fas fa-shield-alt text-secondary-green mr-2"></i> Certified Safe</span>
+                    <span><i class="fas fa-hand-sparkles text-secondary-green mr-2"></i> Daily Sanitized</span>
+                    <span><i class="fas fa-user-friends text-secondary-green mr-2"></i> Trained Staff</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 2: STATS COUNTER BAR ===== -->
+    <section class="py-12 md:py-16 bg-background-cream/80 dark:bg-gray-900/40">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="bg-white dark:bg-dark-card rounded-[28px] md:rounded-[36px] shadow-xl border border-neutral-light dark:border-gray-800 p-6 sm:p-8 md:py-10 md:px-10 max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 items-center">
+                    <!-- Stat 1 -->
+                    <div class="flex flex-col items-center justify-center text-center p-4 lg:border-r lg:border-neutral-light dark:lg:border-gray-800">
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-neutral-dark dark:text-white tracking-tight">50,000+</span>
+                        <span class="text-xs sm:text-sm text-neutral-dark/70 dark:text-gray-400 font-medium mt-2">Happy Children Served</span>
+                    </div>
+
+                    <!-- Stat 2 -->
+                    <div class="flex flex-col items-center justify-center text-center p-4 lg:border-r lg:border-neutral-light dark:lg:border-gray-800">
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-secondary-green tracking-tight">100%</span>
+                        <span class="text-xs sm:text-sm text-neutral-dark/70 dark:text-gray-400 font-medium mt-2">Certified Safety Rating</span>
+                    </div>
+
+                    <!-- Stat 3 -->
+                    <div class="flex flex-col items-center justify-center text-center p-4 lg:border-r lg:border-neutral-light dark:lg:border-gray-800">
+                        <span class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-neutral-dark dark:text-white tracking-tight">15+</span>
+                        <span class="text-xs sm:text-sm text-neutral-dark/70 dark:text-gray-400 font-medium mt-2">Interactive Play Zones</span>
+                    </div>
+
+                    <!-- Stat 4 -->
+                    <div class="flex flex-col items-center justify-center text-center p-4">
+                        <div class="inline-flex items-center justify-center gap-1.5">
+                            <span class="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-neutral-dark dark:text-white tracking-tight">4.9</span>
+                            <i class="fas fa-star text-2xl md:text-3xl text-neutral-dark/80 dark:text-white"></i>
+                        </div>
+                        <span class="text-xs sm:text-sm text-neutral-dark/70 dark:text-gray-400 font-medium mt-2">1,200+ Parent Reviews</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ZONES SECTION (new card layout) ===== -->
+    <section id="zones" class="py-20 bg-feature-pattern">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold">
+                    <span class="text-neutral-dark dark:text-white">Our</span>
+                    <span class="text-primary-brown">Play Zones</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 max-w-2xl mx-auto mt-3 text-lg">
+                    Age-appropriate fun in every corner — safe, engaging, and developmentally smart.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Toddler -->
+                <div class="play-card animate-slide-up flex flex-col h-full">
+                    <div class="h-56 overflow-hidden relative shrink-0">
+                        <img src="assets/zone_toddler_town.jpg" alt="Toddler Town Soft Play" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        <div class="absolute top-4 right-4 age-badge bg-primary-brown text-white whitespace-nowrap">0–3 yrs</div>
+                    </div>
+                    <div class="p-6 sm:p-7 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="age-badge whitespace-nowrap bg-secondary-green/20 text-secondary-green">Soft Play</span>
+                                <span class="age-badge whitespace-nowrap bg-accent-orange/20 text-accent-orange">Sensory</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white">Toddler Town</h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 mb-5 text-sm leading-relaxed">Soft climbing, ball pits, sensory walls, and gentle slides for little explorers.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light/50 dark:border-gray-800 mt-auto gap-2">
+                            <span class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap"><i class="fas fa-clock mr-1"></i> Open play</span>
+                            <a href="zones.html?age=0-3" class="text-primary-brown font-semibold hover:underline flex items-center whitespace-nowrap">Explore <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kids -->
+                <div class="play-card animate-slide-up flex flex-col h-full" style="animation-delay:0.1s">
+                    <div class="h-56 overflow-hidden relative shrink-0">
+                        <img src="assets/zone_adventure_city.jpg" alt="Adventure City Playground" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        <div class="absolute top-4 right-4 age-badge bg-secondary-green text-white whitespace-nowrap">4–7 yrs</div>
+                    </div>
+                    <div class="p-6 sm:p-7 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="age-badge whitespace-nowrap bg-primary-brown/20 text-primary-brown">Interactive</span>
+                                <span class="age-badge whitespace-nowrap bg-accent-orange/20 text-accent-orange">Challenges</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white">Adventure City</h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 mb-5 text-sm leading-relaxed">Multi-level climbers, zip lines, obstacle courses, and interactive digital games.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light/50 dark:border-gray-800 mt-auto gap-2">
+                            <span class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap"><i class="fas fa-clock mr-1"></i> 2hr sessions</span>
+                            <a href="zones.html?age=4-7" class="text-primary-brown font-semibold hover:underline flex items-center whitespace-nowrap">Explore <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pre-teen -->
+                <div class="play-card animate-slide-up flex flex-col h-full" style="animation-delay:0.2s">
+                    <div class="h-56 overflow-hidden relative shrink-0">
+                        <img src="assets/zone_ninja_warrior.jpg" alt="Ninja Warrior Arena" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        <div class="absolute top-4 right-4 age-badge bg-accent-orange text-white whitespace-nowrap">8–12 yrs</div>
+                    </div>
+                    <div class="p-6 sm:p-7 flex flex-col flex-1 justify-between">
+                        <div>
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="age-badge whitespace-nowrap bg-secondary-green/20 text-secondary-green">Tech Zone</span>
+                                <span class="age-badge whitespace-nowrap bg-primary-brown/20 text-primary-brown">Active</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white">Ninja Warrior</h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 mb-5 text-sm leading-relaxed">High ropes, climbing walls, VR experiences, and team challenge courses.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light/50 dark:border-gray-800 mt-auto gap-2">
+                            <span class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap"><i class="fas fa-clock mr-1"></i> 2.5hr sessions</span>
+                            <a href="zones.html?age=8-12" class="text-primary-brown font-semibold hover:underline flex items-center whitespace-nowrap">Explore <i class="fas fa-arrow-right ml-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-14">
+                <a href="zones.html" class="btn-outline-brown px-8 py-3">
+                    View All Zones <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VISUAL SHOWCASE & ABOUT SECTION ===== -->
+    <section id="about" class="py-16 md:py-24 bg-gradient-to-b from-white via-background-cream to-neutral-light/50 dark:from-gray-900 dark:via-dark-card/50 dark:to-gray-900 scroll-mt-20 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <!-- Section Title -->
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase bg-primary-brown/10 text-primary-brown dark:bg-primary-brown/20 dark:text-primary-brown mb-4">
+                    <i class="fas fa-sparkles text-amber-500"></i> Visual Experience
+                </span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold leading-tight text-neutral-dark dark:text-white">
+                    Step Into Our <span class="text-primary-brown">Indoor Kingdom</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 mt-4 text-base md:text-lg">
+                    Discover safe adventures, state-of-the-art play structures, and joyful memories designed for every stage of childhood.
+                </p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-12">
+                <button class="showcase-tab bg-primary-brown text-white shadow-md px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer" data-filter="all">
+                    <i class="fas fa-th-large mr-1.5"></i> All Views
+                </button>
+                <button class="showcase-tab bg-white/80 dark:bg-gray-800 text-neutral-dark dark:text-gray-300 hover:text-primary-brown px-5 py-2.5 rounded-full text-sm font-semibold border border-neutral-light dark:border-gray-700 transition-all duration-300 cursor-pointer" data-filter="toddler">
+                    <i class="fas fa-baby mr-1.5"></i> Soft Play (0-3 yrs)
+                </button>
+                <button class="showcase-tab bg-white/80 dark:bg-gray-800 text-neutral-dark dark:text-gray-300 hover:text-primary-brown px-5 py-2.5 rounded-full text-sm font-semibold border border-neutral-light dark:border-gray-700 transition-all duration-300 cursor-pointer" data-filter="adventure">
+                    <i class="fas fa-shield-alt mr-1.5"></i> Adventure (4-7 yrs)
+                </button>
+                <button class="showcase-tab bg-white/80 dark:bg-gray-800 text-neutral-dark dark:text-gray-300 hover:text-primary-brown px-5 py-2.5 rounded-full text-sm font-semibold border border-neutral-light dark:border-gray-700 transition-all duration-300 cursor-pointer" data-filter="ninja">
+                    <i class="fas fa-vr-cardboard mr-1.5"></i> Ninja & Tech (8-12 yrs)
+                </button>
+            </div>
+
+            <!-- Visual Showcase Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <!-- Visual Card 1 -->
+                <div class="showcase-card group relative bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-lg border border-neutral-light dark:border-gray-800 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full" data-category="adventure">
+                    <div class="h-64 overflow-hidden relative shrink-0">
+                        <img src="assets/why_choose_us.jpg" alt="Interactive Play Center" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <span class="absolute top-4 left-4 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 text-primary-brown text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                            ★ Featured Realm
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-neutral-dark dark:text-white mb-2 group-hover:text-primary-brown transition-colors">
+                                Multi-Level Playground
+                            </h3>
+                            <p class="text-sm text-neutral-dark/70 dark:text-gray-400 mb-4">
+                                Giant spiral slides, padded obstacle mazes, and interactive ball cannons built to standard safety specs.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-3 border-t border-neutral-light dark:border-gray-800 text-xs mt-auto">
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Safety Padded</span>
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Air Conditioned</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Card 2 -->
+                <div class="showcase-card group relative bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-lg border border-neutral-light dark:border-gray-800 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full" data-category="toddler">
+                    <div class="h-64 overflow-hidden relative shrink-0">
+                        <img src="assets/toddler_zone.jpg" alt="Soft Play Area" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <span class="absolute top-4 left-4 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 text-secondary-green text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                            Ages 0 - 3 Yrs
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-neutral-dark dark:text-white mb-2 group-hover:text-primary-brown transition-colors">
+                                Toddler Town Sanctuary
+                            </h3>
+                            <p class="text-sm text-neutral-dark/70 dark:text-gray-400 mb-4">
+                                Ultra-soft sensory wall panels, mini gentle slides, and dedicated parent relaxation seating.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-3 border-t border-neutral-light dark:border-gray-800 text-xs mt-auto">
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Sensory Wall</span>
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Parent Lounge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Card 3 -->
+                <div class="showcase-card group relative bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-lg border border-neutral-light dark:border-gray-800 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full" data-category="ninja">
+                    <div class="h-64 overflow-hidden relative shrink-0">
+                        <img src="assets/ninja_zone.jpg" alt="Ninja & VR Arena" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <span class="absolute top-4 left-4 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 text-accent-orange text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                            Ages 8 - 12 Yrs
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-neutral-dark dark:text-white mb-2 group-hover:text-primary-brown transition-colors">
+                                Ninja Warrior Arena
+                            </h3>
+                            <p class="text-sm text-neutral-dark/70 dark:text-gray-400 mb-4">
+                                High ropes, climbing walls, virtual reality gaming rigs, and agile obstacle courses.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-3 border-t border-neutral-light dark:border-gray-800 text-xs mt-auto">
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">VR Gaming</span>
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Ninja Course</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Card 4 -->
+                <div class="showcase-card group relative bg-white dark:bg-dark-card rounded-3xl overflow-hidden shadow-lg border border-neutral-light dark:border-gray-800 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full" data-category="adventure">
+                    <div class="h-64 overflow-hidden relative shrink-0">
+                        <img src="assets/adventure_zone.jpg" alt="Adventure & Party Rooms" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <span class="absolute top-4 left-4 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 text-primary-brown text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+                            VIP Celebrations
+                        </span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-neutral-dark dark:text-white mb-2 group-hover:text-primary-brown transition-colors">
+                                Private Party Pavilions
+                            </h3>
+                            <p class="text-sm text-neutral-dark/70 dark:text-gray-400 mb-4">
+                                Custom themed party spaces with dedicated hosts, sound system, and catering packages.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-3 border-t border-neutral-light dark:border-gray-800 text-xs mt-auto">
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Dedicated Host</span>
+                            <span class="bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 px-2.5 py-1 rounded-md">Custom Themes</span>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SAFETY FEATURES (new layout) ===== -->
+    <section id="safety" class="py-16 md:py-20 bg-neutral-light dark:bg-gray-900/50 scroll-mt-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold">
+                    <span class="text-neutral-dark dark:text-white">Safe &</span>
+                    <span class="text-secondary-green">Clean</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 max-w-2xl mx-auto mt-3 text-base md:text-lg">
+                    Your child's safety is our #1 priority — here's how we keep the fun worry-free.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-9 text-center shadow-sm hover:shadow-lg transition">
+                    <div class="feature-circle bg-primary-brown/10 text-primary-brown dark:bg-primary-brown/20 mx-auto"><i class="fas fa-hand-sparkles"></i></div>
+                    <h3 class="text-2xl font-bold mt-5 dark:text-white">Daily Sanitization</h3>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 mt-2">All surfaces, toys, and equipment sanitized multiple times a day with child-safe products.</p>
+                </div>
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-9 text-center shadow-sm hover:shadow-lg transition">
+                    <div class="feature-circle bg-secondary-green/10 text-secondary-green dark:bg-secondary-green/20 mx-auto"><i class="fas fa-user-shield"></i></div>
+                    <h3 class="text-2xl font-bold mt-5 dark:text-white">Trained Staff</h3>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 mt-2">Every team member is certified in child safety, first aid, and positive play facilitation.</p>
+                </div>
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-9 text-center shadow-sm hover:shadow-lg transition">
+                    <div class="feature-circle bg-accent-orange/10 text-accent-orange dark:bg-accent-orange/20 mx-auto"><i class="fas fa-clipboard-check"></i></div>
+                    <h3 class="text-2xl font-bold mt-5 dark:text-white">Certified Equipment</h3>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 mt-2">All play structures meet ASTM and CPSC safety standards for indoor playgrounds.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS (new card style) ===== -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-display font-bold">
+                    <span class="text-neutral-dark dark:text-white">Happy</span>
+                    <span class="text-primary-brown">Parents</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 max-w-2xl mx-auto mt-3 text-lg">Real stories from families who love Kids Play Zone.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-sm border-l-4 border-primary-brown flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="assets/parent_sarah.jpg" alt="Sarah M." class="w-12 h-12 rounded-full object-cover border-2 border-primary-brown shadow-sm shrink-0" />
+                            <div><h4 class="font-bold dark:text-white">Sarah M.</h4><p class="text-sm text-neutral-dark/50 dark:text-gray-400">Mom of 2</p></div>
+                        </div>
+                        <p class="text-neutral-dark/80 dark:text-gray-300">"My kids absolutely love Adventure City! The staff is attentive and the place is always spotless. Highly recommend!"</p>
+                    </div>
+                    <div class="text-secondary-green mt-4 pt-3 border-t border-neutral-light/50 dark:border-gray-800"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-sm border-l-4 border-secondary-green flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="assets/parent_james.jpg" alt="James K." class="w-12 h-12 rounded-full object-cover border-2 border-secondary-green shadow-sm shrink-0" />
+                            <div><h4 class="font-bold dark:text-white">James K.</h4><p class="text-sm text-neutral-dark/50 dark:text-gray-400">Dad of 1</p></div>
+                        </div>
+                        <p class="text-neutral-dark/80 dark:text-gray-300">"Toddler Town is perfect for my little one. Soft, safe, and so much fun! We come every weekend."</p>
+                    </div>
+                    <div class="text-secondary-green mt-4 pt-3 border-t border-neutral-light/50 dark:border-gray-800"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-sm border-l-4 border-accent-orange flex flex-col h-full justify-between">
+                    <div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="assets/parent_lisa.jpg" alt="Lisa T." class="w-12 h-12 rounded-full object-cover border-2 border-accent-orange shadow-sm shrink-0" />
+                            <div><h4 class="font-bold dark:text-white">Lisa T.</h4><p class="text-sm text-neutral-dark/50 dark:text-gray-400">Mom of 3</p></div>
+                        </div>
+                        <p class="text-neutral-dark/80 dark:text-gray-300">"The Ninja Warrior zone is a hit with my older kids. They love the challenges and VR experiences!"</p>
+                    </div>
+                    <div class="text-secondary-green mt-4 pt-3 border-t border-neutral-light/50 dark:border-gray-800"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA (new layout) ===== -->
+    <section class="py-20 bg-primary-brown text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-display font-bold">Ready to Play?</h2>
+            <p class="text-xl opacity-90 max-w-2xl mx-auto mt-4 mb-10">Book your session today and give your kids a day of adventure, learning, and joy.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#book" class="bg-white text-primary-brown font-bold px-10 py-4 rounded-full hover:bg-neutral-light transition shadow-lg"><i class="fas fa-ticket-alt mr-2"></i> Book Now</a>
+                <a href="parties.html" class="bg-transparent border-2 border-white text-white font-bold px-10 py-4 rounded-full hover:bg-white/10 transition"><i class="fas fa-birthday-cake mr-2"></i> Birthday Parties</a>
+            </div>
+            <p class="mt-8 opacity-80"><i class="fas fa-shield-alt mr-2"></i> Safe environment • Certified staff • Flexible hours</p>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER (reference colors, new layout) ===== -->
+    <footer class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-child text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-display font-bold text-neutral-dark dark:text-white">Kids</span>
+                            <span class="text-2xl font-display font-bold text-primary-brown">Zone</span>
+                        </div>
+                    </div>
+                    <p class="opacity-80 dark:opacity-70">Where little adventurers explore, learn, and make friends in a safe indoor playground.</p>
+                    <div class="flex space-x-3 justify-center sm:justify-start mt-6">
+                        <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 dark:text-white">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a class="hover:text-primary-brown transition" href="index.html">Home</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html">Play Zones</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="safety.html">Safety</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="parties.html">Parties</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 dark:text-white">Zones</h3>
+                    <ul class="space-y-2">
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=0-3">Toddler (0-3)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=4-7">Kids (4-7)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=8-12">Pre-teen (8-12)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html">All Zones</a></li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 dark:text-white">Contact</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start justify-center sm:justify-start gap-2.5">
+                            <i class="fa-solid fa-location-dot text-primary-brown w-5 shrink-0 mt-1"></i>
+                            <span>123 Play Street, Fun City</span>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-phone text-primary-brown w-5 shrink-0"></i>
+                            <a href="tel:+15557891234" class="hover:text-primary-brown transition whitespace-nowrap">+1 (555) 789-1234</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-envelope text-primary-brown w-5 shrink-0"></i>
+                            <a href="mailto:hello@kidsplayzone.com" class="hover:text-primary-brown transition whitespace-nowrap">hello@kidsplayzone.com</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-clock text-primary-brown w-5 shrink-0"></i>
+                            <span class="whitespace-nowrap">Mon–Sun: 9:00 – 20:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t text-center">
+                <p class="text-sm opacity-75 dark:opacity-70">&copy; 2026 Kids Play Zone. Made with <i class="fas fa-heart text-primary-brown mx-1"></i> for little adventurers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT (refined) ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle?.querySelector('.fa-moon');
+            const themeIconSun = themeToggle?.querySelector('.fa-sun');
+            const mobileThemeToggle = document.getElementById('theme-toggle-mobile');
+            const mobileThemeIcon = mobileThemeToggle?.querySelector('.fa-moon');
+            const mobileThemeIconSun = mobileThemeToggle?.querySelector('.fa-sun');
+
+            function toggleTheme() {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.toggle('hidden', isDark));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.toggle('hidden', !isDark));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.toggle('active', isDark));
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.add('hidden'));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.remove('hidden'));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.add('active'));
+            }
+
+            // RTL Toggle
+            const rtlToggle = document.getElementById('rtl-toggle');
+            const mobileRtlToggle = document.getElementById('rtl-toggle-mobile');
+            function toggleRTL() {
+                const isRTL = document.documentElement.dir === 'rtl';
+                document.documentElement.dir = isRTL ? 'ltr' : 'rtl';
+                document.documentElement.lang = isRTL ? 'en' : 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => {
+                    if (el) { el.textContent = '⇄'; el.classList.toggle('active', !isRTL); }
+                });
+                localStorage.setItem('dir', isRTL ? 'ltr' : 'rtl');
+            }
+            if (rtlToggle) rtlToggle.addEventListener('click', toggleRTL);
+            if (mobileRtlToggle) mobileRtlToggle.addEventListener('click', toggleRTL);
+            if (localStorage.getItem('dir') === 'rtl') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => { if (el) { el.textContent = '⇄'; el.classList.add('active'); } });
+            }
+
+            // Mobile Menu
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileIcon = document.querySelector('#mobile-toggle i');
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    const isOpen = mobileMenu.classList.toggle('open');
+                    mobileIcon.className = isOpen ? 'fas fa-times text-xl' : 'fas fa-bars text-xl';
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+            }
+
+            // Close mobile menu on link click (excluding accordion buttons)
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (link.tagName === 'BUTTON' || link.closest('button')) return;
+                    if (mobileMenu) mobileMenu.classList.remove('open');
+                    if (mobileIcon) mobileIcon.className = 'fas fa-bars text-xl';
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // Visual Showcase Filter Tabs
+            const showcaseTabs = document.querySelectorAll('.showcase-tab');
+            const showcaseCards = document.querySelectorAll('.showcase-card');
+            if (showcaseTabs.length > 0) {
+                showcaseTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        showcaseTabs.forEach(t => {
+                            t.classList.remove('bg-primary-brown', 'text-white', 'shadow-md');
+                            t.classList.add('bg-white/80', 'dark:bg-gray-800', 'text-neutral-dark', 'dark:text-gray-300');
+                        });
+                        tab.classList.add('bg-primary-brown', 'text-white', 'shadow-md');
+                        tab.classList.remove('bg-white/80', 'dark:bg-gray-800', 'text-neutral-dark', 'dark:text-gray-300');
+
+                        const filter = tab.getAttribute('data-filter');
+                        showcaseCards.forEach(card => {
+                            if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

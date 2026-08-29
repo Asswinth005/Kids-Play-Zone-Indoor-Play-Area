@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, viewport-fit=cover">
+    <title>Page Not Found | Kids Play Zone</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-brown': '#8D6E63',
+                        'secondary-green': '#4CAF50',
+                        'accent-orange': '#82736e',
+                        'background-cream': '#FAF5EF',
+                        'neutral-dark': '#5D4037',
+                        'neutral-light': '#EFEBE9',
+                        'dark-bg': '#1a1a1a',
+                        'dark-card': '#2d2d2d'
+                    },
+                    fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        'display': ['Outfit', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-12px)' } }
+                    },
+                    backgroundImage: {
+                        'pattern-dots': "radial-gradient(circle at 1px 1px, rgba(141, 110, 99, 0.1) 1px, transparent 0)",
+                        'hero-404': "radial-gradient(circle at 20% 30%, rgba(141, 110, 99, 0.05) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(76, 175, 80, 0.05) 0%, transparent 45%)"
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ----- FULL PAGE LAYOUT ----- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #FAF5EF;
+            color: #5D4037;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .dark body {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        /* toggle buttons - consistent with brand */
+        .toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #EFEBE9;
+            color: #5D4037;
+            border: 1.5px solid #d7ccc8;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+        .dark .toggle-btn { background: #2d2d2d; color: #ffffff; border-color: #4b5563; }
+        .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(141,110,99,0.3); }
+        .dark .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; }
+        
+        .dark .toggle-btn {
+            background: #374151;
+            color: #9CA3AF;
+        }
+        
+        .toggle-btn:hover {
+            background: #E5E7EB;
+            color: #374151;
+        }
+        
+        .dark .toggle-btn:hover {
+            background: #4B5563;
+            color: #E5E7EB;
+        }
+        
+        .toggle-btn.active {
+            background: #8D6E63;
+            color: white;
+        }
+        
+        /* adventure btn - full width on mobile, auto on desktop */
+        .play-btn {
+            background: linear-gradient(135deg, #8D6E63 0%, #6D4C41 100%);
+            color: white;
+            font-weight: 600;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(141, 110, 99, 0.35);
+        }
+        
+        /* outline button style */
+        .outline-btn {
+            background: transparent;
+            border: 1.5px solid #8D6E63;
+            color: #8D6E63;
+            font-weight: 600;
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        
+        .dark .outline-btn {
+            border-color: #a58d84;
+            color: #e5e5e5;
+        }
+        
+        .outline-btn:hover {
+            background: #8D6E63;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(141, 110, 99, 0.25);
+        }
+        
+        /* logo spin */
+        .logo-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        a:hover .logo-icon {
+            transform: rotate(12deg);
+        }
+        
+        /* 404 number style - large and bold */
+        .error-number {
+            font-size: 8rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            line-height: 1;
+            color: #8D6E63;
+            text-shadow: 0 12px 28px rgba(141, 110, 99, 0.25);
+            letter-spacing: -0.02em;
+        }
+        
+        .dark .error-number {
+            color: #a58d84;
+            text-shadow: 0 12px 28px rgba(141, 110, 99, 0.35);
+        }
+        
+        /* toy block animation */
+        .toy-block {
+            animation: float 7s ease-in-out infinite;
+            color: #8D6E63;
+        }
+        
+        .dark .toy-block {
+            color: #a58d84;
+        }
+        
+        /* RTL adjustments */
+        [dir="rtl"] .fa-arrow-right {
+            transform: scaleX(-1);
+        }
+        
+        [dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+            --tw-space-x-reverse: 1;
+        }
+        
+        /* hidden utility */
+        .hidden {
+            display: none;
+        }
+        
+        /* custom container */
+        .page-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+        
+        /* background pattern */
+        .bg-pattern-404 {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(141, 110, 99, 0.04) 0%, transparent 35%),
+                radial-gradient(circle at 90% 65%, rgba(76, 175, 80, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 30% 80%, rgba(141, 110, 99, 0.03) 0%, transparent 30%);
+        }
+        
+        .dark .bg-pattern-404 {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(141, 110, 99, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 90% 65%, rgba(76, 175, 80, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 30% 80%, rgba(141, 110, 99, 0.06) 0%, transparent 30%);
+        }
+    </style>
+</head>
+
+<body class="bg-pattern-404">
+
+    <!-- ===== NAVIGATION BAR - KIDS PLAY ZONE STYLE ===== -->
+    <nav class="flex-shrink-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-neutral-light dark:border-gray-800">
+        <div class="page-container">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo - redirects to index.html -->
+                <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse group">
+                    <div class="logo-icon w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-child text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-display font-bold tracking-tight text-neutral-dark dark:text-white">Kids</span>
+                        <span class="text-2xl font-display font-bold tracking-tight text-primary-brown">Zone</span>
+                    </div>
+                </a>
+                
+                <!-- Theme & RTL toggles -->
+                <div class="flex items-center gap-2">
+                    <button id="theme-toggle" class="toggle-btn" title="Dark / Light">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun hidden"></i>
+                    </button>
+                    <button id="rtl-toggle" class="toggle-btn" title="RTL / LTR">
+                        ⇄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN 404 CONTENT - FULL PAGE LAYOUT ===== -->
+    <main class="flex-1 flex items-center justify-center py-12 md:py-16">
+        <div class="page-container">
+            <div class="max-w-4xl mx-auto">
+                
+                <!-- 404 Visual Section -->
+                <div class="text-center animate-fade-in">
+                    
+                    <!-- Large 404 with Toy Block Icon -->
+                    <div class="flex items-center justify-center gap-1 md:gap-4 mb-6">
+                        <span class="error-number text-7xl md:text-8xl lg:text-9xl">4</span>
+                        <div class="relative mx-1 md:mx-2">
+                            <i class="fas fa-cube text-7xl md:text-8xl lg:text-9xl toy-block text-primary-brown/90 dark:text-primary-brown/80"></i>
+                            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-primary-brown/5 dark:bg-primary-brown/10 rounded-full blur-xl"></div>
+                        </div>
+                        <span class="error-number text-7xl md:text-8xl lg:text-9xl">4</span>
+                    </div>
+                    
+                    <!-- Error Badge -->
+                    <div class="inline-flex items-center px-4 py-2 bg-primary-brown/10 dark:bg-primary-brown/20 rounded-full mb-6">
+                        <i class="fas fa-map-signs text-primary-brown mr-2 text-sm"></i>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-primary-brown dark:text-primary-brown/90">Oops! Page Not Found</span>
+                    </div>
+                    
+                    <!-- Main Heading -->
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-neutral-dark dark:text-white mb-4">
+                        Where Did the Fun Go?
+                    </h1>
+                    
+                    <!-- Description -->
+                    <p class="text-neutral-dark/70 dark:text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                        Looks like this play zone is empty! The page you're looking for might have moved, 
+                        been renamed, or never existed. Let's get you back to the fun!
+                    </p>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                        <a href="index.html" class="play-btn w-full sm:w-auto px-8">
+                            <i class="fas fa-home mr-2 rtl:ml-2 rtl:mr-0"></i>
+                            Back to Home
+                        </a>
+                        <a href="zones.html" class="outline-btn w-full sm:w-auto px-8 group">
+                            <i class="fas fa-play mr-2 rtl:ml-2 rtl:mr-0"></i>
+                            Explore Zones
+                            <i class="fas fa-arrow-right ml-2 rtl:mr-2 rtl:ml-0 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Helpful Links Section -->
+                    <div class="relative py-8">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-neutral-light/60 dark:border-gray-800/60"></div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <span class="bg-background-cream dark:bg-dark-bg px-6 text-sm text-neutral-dark/50 dark:text-gray-500">
+                                popular places to explore
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Destinations Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                        <a href="zones.html?age=0-3" class="group p-4 rounded-2xl hover:bg-white/60 dark:hover:bg-dark-card/60 transition-all duration-300">
+                            <div class="w-12 h-12 bg-primary-brown/10 dark:bg-primary-brown/20 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-baby text-primary-brown"></i>
+                            </div>
+                            <span class="text-xs font-medium text-neutral-dark dark:text-gray-300">Toddler Town</span>
+                        </a>
+                        <a href="zones.html?age=4-7" class="group p-4 rounded-2xl hover:bg-white/60 dark:hover:bg-dark-card/60 transition-all duration-300">
+                            <div class="w-12 h-12 bg-primary-brown/10 dark:bg-primary-brown/20 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-mountain text-primary-brown"></i>
+                            </div>
+                            <span class="text-xs font-medium text-neutral-dark dark:text-gray-300">Adventure City</span>
+                        </a>
+                        <a href="zones.html?age=8-12" class="group p-4 rounded-2xl hover:bg-white/60 dark:hover:bg-dark-card/60 transition-all duration-300">
+                            <div class="w-12 h-12 bg-primary-brown/10 dark:bg-primary-brown/20 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-trophy text-primary-brown"></i>
+                            </div>
+                            <span class="text-xs font-medium text-neutral-dark dark:text-gray-300">Ninja Warrior</span>
+                        </a>
+                        <a href="parties.html" class="group p-4 rounded-2xl hover:bg-white/60 dark:hover:bg-dark-card/60 transition-all duration-300">
+                            <div class="w-12 h-12 bg-primary-brown/10 dark:bg-primary-brown/20 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-birthday-cake text-primary-brown"></i>
+                            </div>
+                            <span class="text-xs font-medium text-neutral-dark dark:text-gray-300">Birthday Parties</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Back to Home Link (mobile friendly) -->
+                    <div class="mt-10 md:hidden">
+                        <a href="index.html" class="text-primary-brown hover:text-accent-orange font-medium text-sm inline-flex items-center">
+                            <i class="fas fa-arrow-left mr-2 rtl:ml-2 rtl:mr-0"></i>
+                            Return to homepage
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER - KIDS PLAY ZONE STYLE ===== -->
+    <footer class="flex-shrink-0 py-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border-t border-neutral-light dark:border-gray-800">
+        <div class="page-container">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4 text-xs text-neutral-dark/50 dark:text-gray-500">
+                    <span>© 2026 Kids Play Zone</span>
+                    <span>·</span>
+                    <a href="#" class="hover:text-primary-brown transition">Privacy</a>
+                    <span>·</span>
+                    <a href="#" class="hover:text-primary-brown transition">Terms</a>
+                </div>
+                <div class="flex items-center space-x-4 text-xs">
+                    <span class="text-neutral-dark/40 dark:text-gray-600">Need help?</span>
+                    <a href="contact.html" class="text-primary-brown hover:text-accent-orange font-medium">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== DARK / LIGHT + RTL TOGGLE SCRIPT ===== -->
+    <script>
+        (function() {
+            // ---------- THEME ----------
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIconMoon = themeToggle?.querySelector('.fa-moon');
+            const themeIconSun = themeToggle?.querySelector('.fa-sun');
+
+            function setTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    if (themeIconMoon) themeIconMoon.classList.add('hidden');
+                    if (themeIconSun) themeIconSun.classList.remove('hidden');
+                    themeToggle?.classList.add('active');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    if (themeIconMoon) themeIconMoon.classList.remove('hidden');
+                    if (themeIconSun) themeIconSun.classList.add('hidden');
+                    themeToggle?.classList.remove('active');
+                    localStorage.setItem('theme', 'light');
+                }
+            }
+            
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                setTheme(true);
+            } else if (savedTheme === 'light') {
+                setTheme(false);
+            } else {
+                setTheme(false);
+            }
+
+            if (themeToggle) {
+                themeToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setTheme(!document.documentElement.classList.contains('dark'));
+                });
+            }
+
+            // ---------- RTL ----------
+            const rtlBtn = document.getElementById('rtl-toggle');
+            
+            function setRTL(isRTL) {
+                if (isRTL) {
+                    document.documentElement.dir = 'rtl';
+                    document.documentElement.lang = 'ar';
+                    rtlBtn?.classList.add('active');
+                    localStorage.setItem('dir', 'rtl');
+                } else {
+                    document.documentElement.dir = 'ltr';
+                    document.documentElement.lang = 'en';
+                    rtlBtn?.classList.remove('active');
+                    localStorage.setItem('dir', 'ltr');
+                }
+            }
+            
+            const savedDir = localStorage.getItem('dir');
+            if (savedDir === 'rtl') {
+                setRTL(true);
+            } else {
+                setRTL(false);
+            }
+
+            if (rtlBtn) {
+                rtlBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setRTL(document.documentElement.dir !== 'rtl');
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Primary Brown Brand Gradient matching site header logo -->
+    <linearGradient id="logoBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8D6E63"/>
+      <stop offset="100%" stop-color="#5D4037"/>
+    </linearGradient>
+    <linearGradient id="greenBadge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66BB6A"/>
+      <stop offset="100%" stop-color="#4CAF50"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base Rounded Squircle matching header logo container -->
+  <rect x="32" y="32" width="448" height="448" rx="112" ry="112" fill="url(#logoBg)"/>
+  
+  <!-- Subtle Cream Inner Border Ring -->
+  <rect x="48" y="48" width="416" height="416" rx="96" ry="96" fill="none" stroke="#FAF5EF" stroke-width="10" stroke-opacity="0.3"/>
+
+  <!-- Exact Site Logo Child Silhouette (fas fa-child) -->
+  <!-- Head -->
+  <circle cx="256" cy="145" r="48" fill="#FFFFFF"/>
+  
+  <!-- Joyful Arms Up & Torso -->
+  <path d="M 125 210 C 135 185 180 185 215 210 L 297 210 C 332 185 377 185 387 210 C 397 235 365 255 315 250 L 300 330 L 212 330 L 197 250 C 147 255 115 235 125 210 Z" fill="#FFFFFF"/>
+  
+  <!-- Legs -->
+  <path d="M 212 330 L 180 425 C 175 440 215 450 225 430 L 250 330 Z" fill="#FFFFFF"/>
+  <path d="M 300 330 L 332 425 C 337 440 297 450 287 430 L 262 330 Z" fill="#FFFFFF"/>
+
+  <!-- Corner Accent Badge - Secondary Green Circle -->
+  <circle cx="395" cy="115" r="46" fill="url(#greenBadge)" stroke="#FFFFFF" stroke-width="8"/>
+  <!-- White Play Star in Green Badge -->
+  <path d="M 395 88 L 401 104 L 418 106 L 405 119 L 409 136 L 395 127 L 381 136 L 385 119 L 372 106 L 389 104 Z" fill="#FFFFFF"/>
+</svg>

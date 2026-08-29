@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Kids Play Zone</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-brown': '#8D6E63',
+                        'secondary-green': '#4CAF50',
+                        'accent-orange': '#82736e',
+                        'background-cream': '#FAF5EF',
+                        'neutral-dark': '#5D4037',
+                        'neutral-light': '#EFEBE9',
+                        'dark-bg': '#1a1a1a',
+                        'dark-card': '#2d2d2d'
+                    },
+                    fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        'display': ['Outfit', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'float-slow': 'floatSlow 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                    },
+                    keyframes: {
+                        floatSlow: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+                        slideUp: { '0%': { transform: 'translateY(40px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+        h1, h2, h3, h4, h5, h6 { font-weight: 600 !important; }
+        p { font-weight: 400; }
+        
+        body { background-color: #FAF5EF; color: #5D4037; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .dark body { background-color: #1a1a1a; color: #e5e5e5; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #EFEBE9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #8D6E63; border-radius: 10px; }
+        
+        .card-design {
+            background: #FFFFFF;
+            border-radius: 28px;
+            transition: all 0.3s ease;
+            border: 1px solid #EFEBE9;
+            box-shadow: 0 6px 18px rgba(141, 110, 99, 0.06);
+        }
+        .dark .card-design { background: #2d2d2d; border-color: #404040; }
+        .card-design:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -8px rgba(141, 110, 99, 0.15);
+            border-color: #8D6E63;
+        }
+        
+        .btn-primary-design {
+            background-color: #8D6E63;
+            color: #FFFFFF;
+            font-weight: 600;
+            border-radius: 60px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(141, 110, 99, 0.2);
+        }
+        .btn-primary-design:hover {
+            background-color: #6D4C41;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(141, 110, 99, 0.3);
+            color: #FFFFFF;
+        }
+        .dark .btn-primary-design { background-color: #8D6E63; color: #FFFFFF; }
+        .dark .btn-primary-design:hover { background-color: #6D4C41; color: #FFFFFF; }
+        
+        .btn-outline-design {
+            border: 1.5px solid #8D6E63;
+            color: #8D6E63;
+            background: transparent;
+            border-radius: 60px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .btn-outline-design:hover { background-color: #8D6E63; color: #FFFFFF; transform: translateY(-2px); }
+        .dark .btn-outline-design { border-color: #a58d84; color: #e5e5e5; }
+        .dark .btn-outline-design:hover { background-color: #a58d84; color: #1a1a1a; }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: #FFFFFF;
+            border-right: 1px solid #EFEBE9;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            overflow-y: auto;
+        }
+        .dark .sidebar { background: #1a1a1a; border-right-color: #404040; }
+        
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+        }
+        
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+            display: none;
+        }
+        .sidebar-overlay.open { display: block; }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            margin: 0.25rem 0.75rem;
+            border-radius: 12px;
+            color: #5D4037;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .dark .sidebar-item { color: #d1d5db; }
+        .sidebar-item:hover { background: #EFEBE9; color: #5D4037; }
+        .dark .sidebar-item:hover { background: #2d2d2d; color: #e5e5e5; }
+        .sidebar-item.active { background: #8D6E63; color: #FFFFFF; }
+        .dark .sidebar-item.active { background: #8D6E63; color: #FFFFFF; }
+        .sidebar-item i { width: 24px; font-size: 1.1rem; }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+        @media (max-width: 768px) {
+            .main-content { margin-left: 0; padding-top: 70px; }
+        }
+        
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: #FFFFFF;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #EFEBE9;
+            z-index: 50;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dark .mobile-header { background: #1a1a1a; border-bottom-color: #404040; }
+        @media (max-width: 768px) { .mobile-header { display: flex; } }
+        
+        .top-header {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #EFEBE9;
+        }
+        .dark .top-header { background: #2d2d2d; border-color: #404040; }
+        
+        .stat-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 1.2rem;
+            border: 1px solid #EFEBE9;
+            transition: all 0.3s;
+        }
+        .dark .stat-card { background: #2d2d2d; border-color: #404040; }
+        .stat-card:hover { transform: translateY(-3px); border-color: #8D6E63; }
+        
+        .toggle-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #EFEBE9;
+            color: #5D4037;
+            border: 1.5px solid #d7ccc8;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+        }
+        .dark .toggle-btn { background: #2d2d2d; color: #ffffff; border-color: #4b5563; }
+        .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(141,110,99,0.3); }
+        .dark .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; }
+        .toggle-btn:hover { background: #e5e7eb; color: #374151; }
+        .dark .toggle-btn:hover { background: #4b5563; color: #e5e7eb; }
+        .toggle-btn.active { background: #8D6E63; color: white; }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .status-active { background: #E3F2FD; color: #1E4A76; }
+        .status-pending { background: #FFF3E0; color: #EF6C00; }
+        .status-completed { background: #E8F5E9; color: #2E7D32; }
+        .status-review { background: #F3E5F5; color: #6A1B9A; }
+        .status-urgent { background: #FFEBEE; color: #C62828; }
+        .status-booked { background: #E8F5E9; color: #2E7D32; }
+        .dark .status-active { background: #01579B; color: #81D4FA; }
+        .dark .status-pending { background: #E65100; color: #FFCC80; }
+        .dark .status-completed { background: #1B5E20; color: #A5D6A7; }
+        .dark .status-review { background: #4A148C; color: #CE93D8; }
+        .dark .status-urgent { background: #B71C1C; color: #EF9A9A; }
+        .dark .status-booked { background: #1B5E20; color: #A5D6A7; }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            border: 1.5px solid #EFEBE9;
+            background: #FAF5EF;
+            transition: all 0.3s;
+            color: #5D4037;
+        }
+        .dark .form-input { background: #2d2d2d; border-color: #404040; color: #e5e5e5; }
+        .form-input:focus { outline: none; border-color: #8D6E63; box-shadow: 0 0 0 4px rgba(141, 110, 99, 0.15); }
+        .form-label { display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 0.4rem; color: #5D4037; }
+        .dark .form-label { color: #d1d5db; }
+        
+        .page-content.hidden { display: none; }
+        
+        .progress-bar {
+            height: 8px;
+            background: #EFEBE9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .dark .progress-bar { background: #404040; }
+        .progress-fill { height: 100%; background: #8D6E63; border-radius: 10px; transition: width 0.5s ease; }
+        
+        .zone-tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            background: #EFEBE9;
+            color: #5D4037;
+        }
+        .dark .zone-tag { background: #404040; color: #d1d5db; }
+        
+        .client-card {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .client-card:hover { transform: translateY(-2px); border-color: #8D6E63; }
+        
+        /* RTL support */
+        [dir="rtl"] .sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid #EFEBE9;
+        }
+        .dark[dir="rtl"] .sidebar { border-left-color: #404040; }
+        @media (max-width: 768px) {
+            [dir="rtl"] .sidebar { transform: translateX(100%); }
+            [dir="rtl"] .sidebar.open { transform: translateX(0); }
+        }
+        [dir="rtl"] .main-content {
+            margin-left: 0;
+            margin-right: 280px;
+        }
+        @media (max-width: 768px) {
+            [dir="rtl"] .main-content { margin-right: 0; }
+        }
+        [dir="rtl"] .sidebar-item i {
+            margin-right: 0;
+            margin-left: 0.75rem;
+        }
+        [dir="rtl"] .text-left { text-align: right !important; }
+        [dir="rtl"] .text-right { text-align: left !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div class="flex items-center gap-3">
+            <button id="menuToggle" class="toggle-btn"><i class="fas fa-bars"></i></button>
+            <a class="flex items-center space-x-2.5 group shrink-0" href="index.html">
+                <div class="w-9 h-9 bg-primary-brown rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                    <i class="fas fa-child text-white text-base"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-display font-bold tracking-tight text-neutral-dark dark:text-white">Kids</span><span class="text-xl font-display font-bold tracking-tight text-primary-brown">Zone</span>
+                </div>
+            </a>
+        </div>
+        <div class="flex gap-2">
+            <button id="theme-toggle-mobile" class="toggle-btn" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun hidden"></i>
+            </button>
+            <button id="rtl-toggle-mobile" class="toggle-btn" title="Toggle LTR/RTL">⇄</button>
+        </div>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="p-5 border-b border-neutral-light dark:border-gray-800">
+            <a class="flex items-center space-x-3 group" href="index.html">
+                <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                    <i class="fas fa-child text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center">
+                        <span class="text-2xl font-display font-bold tracking-tight text-neutral-dark dark:text-white">Kids</span>
+                        <span class="text-2xl font-display font-bold tracking-tight text-primary-brown">Zone</span>
+                    </div>
+                    <p class="text-xs text-neutral-dark/60 dark:text-gray-400">Admin Portal</p>
+                </div>
+            </a>
+        </div>
+        <nav class="py-4">
+            <div class="sidebar-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+            <div class="sidebar-item" data-page="parents"><i class="fas fa-users"></i><span>Parents</span></div>
+            <div class="sidebar-item" data-page="bookings"><i class="fas fa-calendar-check"></i><span>Bookings</span></div>
+            <div class="sidebar-item" data-page="zones"><i class="fas fa-cubes"></i><span>Play Zones</span></div>
+            <div class="sidebar-item" data-page="parties"><i class="fas fa-birthday-cake"></i><span>Parties</span></div>
+            <div class="sidebar-item" data-page="memberships"><i class="fas fa-id-card"></i><span>Memberships</span></div>
+            <div class="sidebar-item" data-page="messages"><i class="fas fa-comments"></i><span>Messages</span></div>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-neutral-light dark:border-gray-800">
+            <a href="login.html" class="flex items-center justify-center gap-2 w-full p-2.5 rounded-xl bg-neutral-light dark:bg-gray-800 hover:bg-primary-brown dark:hover:bg-primary-brown transition font-semibold text-sm text-neutral-dark dark:text-gray-200 hover:text-white dark:hover:text-white border border-neutral-light dark:border-gray-700 shadow-sm">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-header flex justify-between items-center flex-wrap gap-3">
+            <div>
+                <h1 class="text-2xl font-display font-bold" id="page-title">Dashboard</h1>
+                <p class="text-sm text-neutral-dark/60 dark:text-gray-400" id="page-subtitle">Welcome back, Admin</p>
+            </div>
+            <div class="hidden lg:flex items-center gap-4">
+                <button id="theme-toggle" class="toggle-btn" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun hidden"></i>
+                </button>
+                <button id="rtl-toggle" class="toggle-btn" title="Toggle LTR/RTL">⇄</button>
+                <div class="flex items-center gap-3 border-l border-neutral-light dark:border-gray-800 pl-4">
+                    <img src="assets/admin_profile_director_v2.jpg" alt="Admin User" class="w-10 h-10 rounded-full object-cover object-center ring-2 ring-primary-brown shadow-sm shrink-0" />
+                    <div class="text-left hidden lg:block">
+                        <p class="text-sm font-bold text-neutral-dark dark:text-white leading-tight">Admin User</p>
+                        <p class="text-[10px] text-neutral-dark/60 dark:text-gray-400">Manager</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== DASHBOARD ========== -->
+        <div id="page-dashboard" class="page-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-neutral-dark/60 dark:text-gray-400 mb-1">Today's Bookings</p>
+                            <p class="text-2xl font-bold text-neutral-dark dark:text-white">18</p>
+                        </div>
+                        <div class="w-10 h-10 bg-primary-brown/10 rounded-full flex items-center justify-center"><i class="fas fa-calendar-day text-primary-brown"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-neutral-dark/60 dark:text-gray-400 mb-1">Active Members</p>
+                            <p class="text-2xl font-bold text-neutral-dark dark:text-white">142</p>
+                        </div>
+                        <div class="w-10 h-10 bg-secondary-green/10 rounded-full flex items-center justify-center"><i class="fas fa-user-check text-secondary-green"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-neutral-dark/60 dark:text-gray-400 mb-1">Pending Requests</p>
+                            <p class="text-2xl font-bold text-neutral-dark dark:text-white">5</p>
+                        </div>
+                        <div class="w-10 h-10 bg-accent-orange/10 rounded-full flex items-center justify-center"><i class="fas fa-clock text-accent-orange"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-neutral-dark/60 dark:text-gray-400 mb-1">Parties This Week</p>
+                            <p class="text-2xl font-bold text-neutral-dark dark:text-white">8</p>
+                        </div>
+                        <div class="w-10 h-10 bg-primary-brown/10 rounded-full flex items-center justify-center"><i class="fas fa-birthday-cake text-primary-brown"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="stat-card">
+                    <h3 class="font-display font-bold text-lg mb-3">Recent Activity</h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 pb-2 border-b border-neutral-light dark:border-gray-800">
+                            <i class="fas fa-calendar-plus text-primary-brown mt-1"></i>
+                            <div><p class="text-sm font-medium">New booking: Emma (Adventure City)</p><p class="text-xs text-neutral-dark/60 dark:text-gray-400">Today, 10:30 AM</p></div>
+                        </div>
+                        <div class="flex gap-3 pb-2 border-b border-neutral-light dark:border-gray-800">
+                            <i class="fas fa-user-plus text-secondary-green mt-1"></i>
+                            <div><p class="text-sm font-medium">New member registered: The Johnson Family</p><p class="text-xs text-neutral-dark/60 dark:text-gray-400">Yesterday, 4:15 PM</p></div>
+                        </div>
+                        <div class="flex gap-3 pb-2 border-b border-neutral-light dark:border-gray-800">
+                            <i class="fas fa-birthday-cake text-accent-orange mt-1"></i>
+                            <div><p class="text-sm font-medium">Party booking: Princess theme (10 kids)</p><p class="text-xs text-neutral-dark/60 dark:text-gray-400">Yesterday, 2:00 PM</p></div>
+                        </div>
+                        <div class="flex gap-3">
+                            <i class="fas fa-check-circle text-secondary-green mt-1"></i>
+                            <div><p class="text-sm font-medium">Membership renewed: Sarah Johnson</p><p class="text-xs text-neutral-dark/60 dark:text-gray-400">2 days ago</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3 class="font-display font-bold text-lg mb-3">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button data-nav="bookings" class="w-full text-left px-4 py-2 bg-neutral-light/50 dark:bg-gray-800/50 text-neutral-dark dark:text-white rounded-xl hover:bg-primary-brown/20 dark:hover:bg-primary-brown/20 transition flex items-center gap-3">
+                            <i class="fas fa-calendar-check text-primary-brown"></i><span>View Today's Bookings</span>
+                        </button>
+                        <button data-nav="parties" class="w-full text-left px-4 py-2 bg-neutral-light/50 dark:bg-gray-800/50 text-neutral-dark dark:text-white rounded-xl hover:bg-primary-brown/20 dark:hover:bg-primary-brown/20 transition flex items-center gap-3">
+                            <i class="fas fa-birthday-cake text-secondary-green"></i><span>Manage Party Requests</span>
+                        </button>
+                        <button data-nav="parents" class="w-full text-left px-4 py-2 bg-neutral-light/50 dark:bg-gray-800/50 text-neutral-dark dark:text-white rounded-xl hover:bg-primary-brown/20 dark:hover:bg-primary-brown/20 transition flex items-center gap-3">
+                            <i class="fas fa-users text-accent-orange"></i><span>View All Parents</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PARENTS ========== -->
+        <div id="page-parents" class="page-content hidden">
+            <div class="card-design p-6">
+                <h3 class="font-display font-bold text-2xl mb-4">Parents</h3>
+                <p class="text-sm text-neutral-dark/60 dark:text-gray-400 mb-6">Manage all registered parents and their children.</p>
+                <div class="space-y-3">
+                    <div class="client-card card-design p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/admin_parent_sarah.jpg" alt="Sarah Johnson" class="w-11 h-11 rounded-full object-cover object-center ring-2 ring-primary-brown/30 shrink-0" />
+                            <div>
+                                <p class="font-bold text-neutral-dark dark:text-white">Sarah Johnson</p>
+                                <p class="text-xs text-neutral-dark/60 dark:text-gray-400">2 children · Family Silver</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-neutral-light dark:border-gray-800">
+                            <span class="status-badge status-active whitespace-nowrap">Active</span>
+                            <span class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">8 sessions left</span>
+                            <button class="text-sm font-semibold text-primary-brown hover:text-accent-orange whitespace-nowrap">View →</button>
+                        </div>
+                    </div>
+                    <div class="client-card card-design p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/admin_parent_michael.jpg" alt="Michael Rodriguez" class="w-11 h-11 rounded-full object-cover object-top ring-2 ring-secondary-green/30 shrink-0" />
+                            <div>
+                                <p class="font-bold text-neutral-dark dark:text-white">Michael Rodriguez</p>
+                                <p class="text-xs text-neutral-dark/60 dark:text-gray-400">1 child · Gold Plus</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-neutral-light dark:border-gray-800">
+                            <span class="status-badge status-completed whitespace-nowrap">Completed</span>
+                            <span class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">12 sessions used</span>
+                            <button class="text-sm font-semibold text-primary-brown hover:text-accent-orange whitespace-nowrap">View →</button>
+                        </div>
+                    </div>
+                    <div class="client-card card-design p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <img src="assets/admin_parent_jessica.jpg" alt="Jessica Davis" class="w-11 h-11 rounded-full object-cover object-center ring-2 ring-accent-orange/30 shrink-0" />
+                            <div>
+                                <p class="font-bold text-neutral-dark dark:text-white">Jessica Davis</p>
+                                <p class="text-xs text-neutral-dark/60 dark:text-gray-400">3 children · Platinum</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-2 sm:pt-0 border-neutral-light dark:border-gray-800">
+                            <span class="status-badge status-review whitespace-nowrap">In Review</span>
+                            <span class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">New registration</span>
+                            <button class="text-sm font-semibold text-primary-brown hover:text-accent-orange whitespace-nowrap">View →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BOOKINGS ========== -->
+        <div id="page-bookings" class="page-content hidden">
+            <div class="card-design p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-display font-bold text-2xl">Today's Bookings</h3>
+                    <span class="text-sm text-neutral-dark/60 dark:text-gray-400 font-medium">18 sessions</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-neutral-light dark:border-gray-800">
+                                <th class="text-left py-2 px-3 font-semibold text-neutral-dark/60 dark:text-gray-400">Time</th>
+                                <th class="text-left py-2 px-3 font-semibold text-neutral-dark/60 dark:text-gray-400">Parent</th>
+                                <th class="text-left py-2 px-3 font-semibold text-neutral-dark/60 dark:text-gray-400">Child</th>
+                                <th class="text-left py-2 px-3 font-semibold text-neutral-dark/60 dark:text-gray-400">Zone</th>
+                                <th class="text-left py-2 px-3 font-semibold text-neutral-dark/60 dark:text-gray-400">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-neutral-light/50 dark:border-gray-800/50">
+                                <td class="py-2 px-3 font-medium">9:00 AM</td>
+                                <td class="py-2 px-3">Sarah Johnson</td>
+                                <td class="py-2 px-3">Emma</td>
+                                <td class="py-2 px-3"><span class="zone-tag">Adventure City</span></td>
+                                <td class="py-2 px-3"><span class="status-badge status-booked">Booked</span></td>
+                            </tr>
+                            <tr class="border-b border-neutral-light/50 dark:border-gray-800/50">
+                                <td class="py-2 px-3 font-medium">10:30 AM</td>
+                                <td class="py-2 px-3">Michael Rodriguez</td>
+                                <td class="py-2 px-3">Leo</td>
+                                <td class="py-2 px-3"><span class="zone-tag">Toddler Town</span></td>
+                                <td class="py-2 px-3"><span class="status-badge status-booked">Booked</span></td>
+                            </tr>
+                            <tr class="border-b border-neutral-light/50 dark:border-gray-800/50">
+                                <td class="py-2 px-3 font-medium">11:00 AM</td>
+                                <td class="py-2 px-3">Jessica Davis</td>
+                                <td class="py-2 px-3">Sophia</td>
+                                <td class="py-2 px-3"><span class="zone-tag">Ninja Warrior</span></td>
+                                <td class="py-2 px-3"><span class="status-badge status-pending">Checked In</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-medium">1:00 PM</td>
+                                <td class="py-2 px-3">David Kim</td>
+                                <td class="py-2 px-3">Ethan</td>
+                                <td class="py-2 px-3"><span class="zone-tag">Adventure City</span></td>
+                                <td class="py-2 px-3"><span class="status-badge status-review">Waitlist</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PLAY ZONES ========== -->
+        <div id="page-zones" class="page-content hidden">
+            <div class="card-design p-6">
+                <h3 class="font-display font-bold text-2xl mb-4">Play Zones</h3>
+                <p class="text-sm text-neutral-dark/60 dark:text-gray-400 mb-6">Manage your play zones, capacity, and availability.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="card-design p-5 text-center flex flex-col justify-between h-full bg-white dark:bg-dark-card">
+                        <div>
+                            <div class="w-16 h-16 bg-primary-brown/10 rounded-full flex items-center justify-center text-primary-brown text-3xl mx-auto shrink-0">
+                                <i class="fas fa-baby"></i>
+                            </div>
+                            <h4 class="font-bold text-base sm:text-lg mt-3 text-neutral-dark dark:text-white whitespace-nowrap">Toddler Town</h4>
+                            <p class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">0-3 years</p>
+                            <div class="mt-4 flex items-center justify-between text-xs sm:text-sm gap-2">
+                                <span class="whitespace-nowrap font-medium text-neutral-dark/80 dark:text-gray-300">Capacity: 15</span>
+                                <span class="text-secondary-green font-semibold whitespace-nowrap">8 available</span>
+                            </div>
+                            <div class="progress-bar mt-2"><div class="progress-fill" style="width:47%"></div></div>
+                        </div>
+                        <button class="btn-outline-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap">Manage Zone</button>
+                    </div>
+                    <div class="card-design p-5 text-center border-2 border-primary-brown bg-primary-brown/5 dark:bg-primary-brown/10 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="w-16 h-16 bg-secondary-green/10 rounded-full flex items-center justify-center text-secondary-green text-3xl mx-auto shrink-0">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h4 class="font-bold text-base sm:text-lg mt-3 text-neutral-dark dark:text-white whitespace-nowrap">Adventure City</h4>
+                            <p class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">4-7 years</p>
+                            <div class="mt-4 flex items-center justify-between text-xs sm:text-sm gap-2">
+                                <span class="whitespace-nowrap font-medium text-neutral-dark/80 dark:text-gray-300">Capacity: 25</span>
+                                <span class="text-accent-orange font-semibold whitespace-nowrap">3 available</span>
+                            </div>
+                            <div class="progress-bar mt-2"><div class="progress-fill" style="width:88%"></div></div>
+                        </div>
+                        <button class="btn-primary-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap shadow-md">Manage Zone</button>
+                    </div>
+                    <div class="card-design p-5 text-center flex flex-col justify-between h-full bg-white dark:bg-dark-card">
+                        <div>
+                            <div class="w-16 h-16 bg-accent-orange/10 rounded-full flex items-center justify-center text-accent-orange text-3xl mx-auto shrink-0">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h4 class="font-bold text-base sm:text-lg mt-3 text-neutral-dark dark:text-white whitespace-nowrap">Ninja Warrior</h4>
+                            <p class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">8-12 years</p>
+                            <div class="mt-4 flex items-center justify-between text-xs sm:text-sm gap-2">
+                                <span class="whitespace-nowrap font-medium text-neutral-dark/80 dark:text-gray-300">Capacity: 20</span>
+                                <span class="text-secondary-green font-semibold whitespace-nowrap">12 available</span>
+                            </div>
+                            <div class="progress-bar mt-2"><div class="progress-fill" style="width:40%"></div></div>
+                        </div>
+                        <button class="btn-outline-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap">Manage Zone</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PARTIES ========== -->
+        <div id="page-parties" class="page-content hidden">
+            <div class="card-design p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-display font-bold text-2xl">Party Bookings</h3>
+                    <span class="text-sm text-neutral-dark/60 dark:text-gray-400 font-medium">8 this week</span>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="client-card card-design p-4">
+                        <div class="flex flex-wrap justify-between items-start gap-3">
+                            <div>
+                                <p class="font-bold">Princess Party - Emma</p>
+                                <div class="flex flex-wrap gap-3 mt-2 text-sm text-neutral-dark/60 dark:text-gray-400">
+                                    <span><i class="fas fa-calendar text-primary-brown"></i> Sep 15, 2026</span>
+                                    <span><i class="fas fa-users text-secondary-green"></i> 12 guests</span>
+                                    <span><i class="fas fa-dollar-sign text-accent-orange"></i> Gold Package</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-active">Confirmed</span>
+                        </div>
+                        <div class="mt-3 flex gap-2">
+                            <button class="btn-primary-design px-4 py-1.5 text-sm">View Details</button>
+                            <button class="btn-outline-design px-4 py-1.5 text-sm">Contact Parent</button>
+                        </div>
+                    </div>
+                    <div class="client-card card-design p-4">
+                        <div class="flex flex-wrap justify-between items-start gap-3">
+                            <div>
+                                <p class="font-bold">Superhero Party - Leo</p>
+                                <div class="flex flex-wrap gap-3 mt-2 text-sm text-neutral-dark/60 dark:text-gray-400">
+                                    <span><i class="fas fa-calendar text-primary-brown"></i> Sep 16, 2026</span>
+                                    <span><i class="fas fa-users text-secondary-green"></i> 8 guests</span>
+                                    <span><i class="fas fa-dollar-sign text-accent-orange"></i> Silver Package</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-pending">Pending</span>
+                        </div>
+                        <div class="mt-3 flex gap-2">
+                            <button class="btn-primary-design px-4 py-1.5 text-sm">View Details</button>
+                            <button class="btn-outline-design px-4 py-1.5 text-sm">Contact Parent</button>
+                        </div>
+                    </div>
+                    <div class="client-card card-design p-4">
+                        <div class="flex flex-wrap justify-between items-start gap-3">
+                            <div>
+                                <p class="font-bold">Dino World Party - Sophia</p>
+                                <div class="flex flex-wrap gap-3 mt-2 text-sm text-neutral-dark/60 dark:text-gray-400">
+                                    <span><i class="fas fa-calendar text-primary-brown"></i> Sep 18, 2026</span>
+                                    <span><i class="fas fa-users text-secondary-green"></i> 15 guests</span>
+                                    <span><i class="fas fa-dollar-sign text-accent-orange"></i> Platinum Package</span>
+                                </div>
+                            </div>
+                            <span class="status-badge status-completed">Approved</span>
+                        </div>
+                        <div class="mt-3 flex gap-2">
+                            <button class="btn-primary-design px-4 py-1.5 text-sm">View Details</button>
+                            <button class="btn-outline-design px-4 py-1.5 text-sm">Contact Parent</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MEMBERSHIPS ========== -->
+        <div id="page-memberships" class="page-content hidden">
+            <div class="card-design p-6">
+                <h3 class="font-display font-bold text-2xl mb-4">Memberships</h3>
+                <p class="text-sm text-neutral-dark/60 dark:text-gray-400 mb-6">Manage membership plans and renewals.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    <div class="card-design p-5 text-center border border-primary-brown/30 flex flex-col justify-between h-full">
+                        <div>
+                            <h4 class="font-bold text-base sm:text-lg text-primary-brown whitespace-nowrap">Family Silver</h4>
+                            <p class="text-2xl font-bold mt-2 text-neutral-dark dark:text-white">$99<span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/mo</span></p>
+                            <p class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">10 sessions/month</p>
+                            <p class="text-xs text-secondary-green font-semibold mt-2 whitespace-nowrap">Active: 38 members</p>
+                        </div>
+                        <button class="btn-outline-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap">Manage Plan</button>
+                    </div>
+                    <div class="card-design p-5 text-center border-2 border-primary-brown bg-primary-brown/5 flex flex-col justify-between h-full">
+                        <div>
+                            <h4 class="font-bold text-base sm:text-lg text-secondary-green whitespace-nowrap">Gold Plus</h4>
+                            <p class="text-2xl font-bold mt-2 text-neutral-dark dark:text-white">$149<span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/mo</span></p>
+                            <p class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">20 sessions/month</p>
+                            <p class="text-xs text-secondary-green font-semibold mt-2 whitespace-nowrap">Active: 52 members</p>
+                        </div>
+                        <button class="btn-primary-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap shadow-md">Manage Plan</button>
+                    </div>
+                    <div class="card-design p-5 text-center border border-accent-orange/30 flex flex-col justify-between h-full">
+                        <div>
+                            <h4 class="font-bold text-base sm:text-lg text-accent-orange whitespace-nowrap">Platinum</h4>
+                            <p class="text-2xl font-bold mt-2 text-neutral-dark dark:text-white">$199<span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/mo</span></p>
+                            <p class="text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">Unlimited sessions</p>
+                            <p class="text-xs text-secondary-green font-semibold mt-2 whitespace-nowrap">Active: 52 members</p>
+                        </div>
+                        <button class="btn-outline-design w-full mt-4 py-2.5 text-xs sm:text-sm font-semibold whitespace-nowrap">Manage Plan</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-2">Recent Renewals</h4>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center p-3 bg-neutral-light/50 dark:bg-gray-800/50 rounded-xl">
+                            <span>Sarah Johnson - Family Silver</span>
+                            <span class="text-sm text-neutral-dark/60 dark:text-gray-400">Renewed today</span>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-neutral-light/50 dark:bg-gray-800/50 rounded-xl">
+                            <span>Michael Rodriguez - Gold Plus</span>
+                            <span class="text-sm text-neutral-dark/60 dark:text-gray-400">Renewed yesterday</span>
+                            <span class="status-badge status-active">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MESSAGES ========== -->
+        <div id="page-messages" class="page-content hidden">
+            <div class="card-design p-6">
+                <h3 class="font-display font-bold text-2xl mb-4">Messages</h3>
+                <p class="text-sm text-neutral-dark/60 dark:text-gray-400 mb-6">Communicate with parents and manage inquiries.</p>
+                
+                <div class="space-y-4">
+                    <div class="p-4 bg-neutral-light/50 dark:bg-gray-800/50 rounded-xl">
+                        <div class="flex justify-between items-start gap-3">
+                            <div class="flex gap-3 items-start">
+                                <img src="assets/admin_parent_sarah.jpg" alt="Sarah Johnson" class="w-9 h-9 rounded-full object-cover object-center ring-2 ring-primary-brown/30 shrink-0 mt-0.5" />
+                                <div>
+                                    <p class="font-bold text-neutral-dark dark:text-white">Sarah Johnson <span class="text-xs font-normal text-neutral-dark/60 dark:text-gray-400">Parent</span></p>
+                                    <p class="text-sm mt-1 text-neutral-dark/80 dark:text-gray-300">Hi! I'd like to book an additional session for my daughter Emma this weekend. Is there availability?</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">Today, 11:00 AM</span>
+                        </div>
+                        <div class="mt-3 flex gap-2 pl-12">
+                            <button class="btn-primary-design px-4 py-1 text-sm">Reply</button>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-dark-card rounded-xl border border-neutral-light dark:border-gray-800">
+                        <div class="flex justify-between items-start gap-3">
+                            <div class="flex gap-3 items-start">
+                                <img src="assets/admin_profile_director_v2.jpg" alt="Admin User" class="w-9 h-9 rounded-full object-cover object-center ring-2 ring-primary-brown/30 shrink-0 mt-0.5" />
+                                <div>
+                                    <p class="font-bold text-neutral-dark dark:text-white">Admin <span class="text-xs font-normal text-neutral-dark/60 dark:text-gray-400">You</span></p>
+                                    <p class="text-sm mt-1 text-neutral-dark/80 dark:text-gray-300">Of course! I've checked availability and there are spots open at 10:30 AM and 2:00 PM. Let me know which works best.</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">Today, 9:30 AM</span>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-neutral-light/50 dark:bg-gray-800/50 rounded-xl">
+                        <div class="flex justify-between items-start gap-3">
+                            <div class="flex gap-3 items-start">
+                                <img src="assets/admin_parent_jessica.jpg" alt="Jessica Davis" class="w-9 h-9 rounded-full object-cover object-center ring-2 ring-accent-orange/30 shrink-0 mt-0.5" />
+                                <div>
+                                    <p class="font-bold text-neutral-dark dark:text-white">Jessica Davis <span class="text-xs font-normal text-neutral-dark/60 dark:text-gray-400">Parent</span></p>
+                                    <p class="text-sm mt-1 text-neutral-dark/80 dark:text-gray-300">I'd like to inquire about booking a birthday party for my daughter Sophia. Can you share available dates and packages?</p>
+                                </div>
+                            </div>
+                            <span class="text-xs text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap">Yesterday, 2:00 PM</span>
+                        </div>
+                        <div class="mt-3 flex gap-2 pl-12">
+                            <button class="btn-primary-design px-4 py-1 text-sm">Reply</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <label class="form-label">Send a Message</label>
+                    <div class="flex gap-3">
+                        <input type="text" class="form-input flex-1" placeholder="Type your message..." />
+                        <button class="btn-primary-design px-6 py-2"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // RTL Toggle
+            const rtlToggle = document.getElementById('rtl-toggle');
+            const mobileRtlToggle = document.getElementById('rtl-toggle-mobile');
+            function toggleRTL() {
+                const isRTL = document.documentElement.dir === 'rtl';
+                document.documentElement.dir = isRTL ? 'ltr' : 'rtl';
+                document.documentElement.lang = isRTL ? 'en' : 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => {
+                    if (el) { el.textContent = '⇄'; el.classList.toggle('active', !isRTL); }
+                });
+                localStorage.setItem('dir', isRTL ? 'ltr' : 'rtl');
+            }
+            if (rtlToggle) rtlToggle.addEventListener('click', toggleRTL);
+            if (mobileRtlToggle) mobileRtlToggle.addEventListener('click', toggleRTL);
+            if (localStorage.getItem('dir') === 'rtl') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => { if (el) { el.textContent = '⇄'; el.classList.add('active'); } });
+            }
+
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle?.querySelector('.fa-moon');
+            const themeIconSun = themeToggle?.querySelector('.fa-sun');
+            const mobileThemeToggle = document.getElementById('theme-toggle-mobile');
+            const mobileThemeIcon = mobileThemeToggle?.querySelector('.fa-moon');
+            const mobileThemeIconSun = mobileThemeToggle?.querySelector('.fa-sun');
+
+            function toggleTheme() {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.toggle('hidden', isDark));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.toggle('hidden', !isDark));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.toggle('active', isDark));
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.add('hidden'));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.remove('hidden'));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.add('active'));
+            }
+
+            // Mobile Sidebar
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+            function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('open'); }
+            if (menuToggle) menuToggle.addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+            if (overlay) overlay.addEventListener('click', closeSidebar);
+            window.addEventListener('resize', () => { if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar(); });
+
+            // Navigation
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            const pages = document.querySelectorAll('.page-content');
+            const pageTitle = document.getElementById('page-title');
+            const pageSubtitle = document.getElementById('page-subtitle');
+            const titles = {
+                dashboard: { title: 'Dashboard', subtitle: 'Welcome back, Admin' },
+                parents: { title: 'Parents', subtitle: 'Manage registered parents' },
+                bookings: { title: 'Bookings', subtitle: 'View and manage all bookings' },
+                zones: { title: 'Play Zones', subtitle: 'Manage zones and capacity' },
+                parties: { title: 'Parties', subtitle: 'Manage party bookings' },
+                memberships: { title: 'Memberships', subtitle: 'Manage membership plans' },
+                messages: { title: 'Messages', subtitle: 'Communicate with parents' }
+            };
+            function navigateTo(page) {
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                document.querySelector(`.sidebar-item[data-page="${page}"]`)?.classList.add('active');
+                pages.forEach(p => p.classList.add('hidden'));
+                document.getElementById(`page-${page}`)?.classList.remove('hidden');
+                if (titles[page]) { pageTitle.textContent = titles[page].title; pageSubtitle.textContent = titles[page].subtitle; }
+                closeSidebar();
+            }
+            sidebarItems.forEach(item => { item.addEventListener('click', () => { navigateTo(item.getAttribute('data-page')); }); });
+            document.querySelectorAll('[data-nav]').forEach(btn => { btn.addEventListener('click', () => { navigateTo(btn.getAttribute('data-nav')); }); });
+        });
+    </script>
+</body>
+</html>

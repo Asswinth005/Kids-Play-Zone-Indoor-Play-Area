@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Kids Play Zone | Home 2 - Adventure World</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="description" content="Welcome to Home 2: Adventure World at Kids Play Zone. Trampolines, VR, Climbing, and Next-Gen Soft Play." />
+
+    <!-- Tailwind CSS -->
+    <script src="tailwind.js"></script>
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-brown': '#8D6E63',
+                        'secondary-green': '#4CAF50',
+                        'accent-orange': '#82736e',
+                        'background-cream': '#FAF5EF',
+                        'neutral-dark': '#5D4037',
+                        'neutral-light': '#EFEBE9',
+                        'dark-bg': '#1a1a1a',
+                        'dark-card': '#2d2d2d'
+                    },
+                    fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        'display': ['Outfit', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+        }
+        body { background-color: #FAF5EF; color: #5D4037; scroll-behavior: smooth; }
+        .dark body { background-color: #1a1a1a; color: #e5e5e5; }
+        .nav-link { position: relative; font-weight: 500; color: #5D4037; transition: color 0.2s; padding: 0.25rem 0; }
+        .dark .nav-link { color: #d1d5db; }
+        .nav-link:hover { color: #8D6E63; }
+        .nav-link.active { color: #8D6E63; font-weight: 600; }
+        .dark .nav-link.active { color: #8D6E63; font-weight: 600; }
+        /* MOBILE MENU (simplified & aligned) */
+        .mobile-menu {
+            background: white;
+            border-top: 1px solid #e5e5e5;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .dark .mobile-menu { background: #1a1a1a; border-color: #374151; }
+        .mobile-menu.open { max-height: 85vh; overflow-y: auto; }
+        .mobile-link {
+            display: block;
+            padding: 0.875rem 1.5rem;
+            font-weight: 500;
+            color: #5D4037;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .dark .mobile-link { color: #d1d5db; border-bottom-color: #374151; }
+        .mobile-link:hover { background: #f9fafb; color: #8D6E63; }
+        .dark .mobile-link:hover { background: #374151; }
+        .mobile-link.active {
+            color: #8D6E63 !important;
+            font-weight: 700 !important;
+            background: rgba(141, 110, 99, 0.12) !important;
+            border-left: 4px solid #8D6E63 !important;
+            padding-left: 1.25rem !important;
+        }
+        .dark .mobile-link.active {
+            color: #ffffff !important;
+            background: rgba(141, 110, 99, 0.25) !important;
+            border-left-color: #8D6E63 !important;
+        }
+
+        .toggle-btn { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: #EFEBE9; color: #5D4037; border: 1.5px solid #d7ccc8; font-weight: 700; font-size: 1.1rem; transition: all 0.2s ease; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+        .dark .toggle-btn { background: #2d2d2d; color: #ffffff; border-color: #4b5563; }
+        .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(141,110,99,0.3); }
+        .dark .toggle-btn:hover { background: #8D6E63; color: #ffffff; border-color: #8D6E63; }
+        .auth-btn { padding: 0.5rem 1.5rem; border-radius: 8px; font-weight: 500; border: 1px solid transparent; }
+        .auth-btn.login { border-color: #d7ccc8; color: #5D4037; }
+        .dark .auth-btn.login { border-color: #4b5563; color: #d1d5db; }
+        .auth-btn.signup { background: #8D6E63; color: white; }
+        .mobile-auth-btn { display: block; padding: 0.75rem; border-radius: 12px; font-weight: 600; }
+        .mobile-auth-btn.login { background: transparent; border: 1px solid #d7ccc8; color: #5D4037; }
+        .dark .mobile-auth-btn.login { border-color: #4b5563; color: #d1d5db; }
+        .mobile-auth-btn.signup { background: #8D6E63; color: white; }
+
+        /* SOCIAL ICONS */
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #EFEBE9;
+            color: #5D4037;
+            transition: all 0.3s ease;
+        }
+        .dark .social-icon { background: #374151; color: #e5e5e5; }
+        .social-icon:hover { background: #8D6E63; color: white; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION (exact match from index.html) ===== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-neutral-light dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a class="flex items-center space-x-3 group" href="index.html">
+                    <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">
+                        <i class="fas fa-child text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-display font-bold tracking-tight text-neutral-dark dark:text-white">Kids</span>
+                        <span class="text-2xl font-display font-bold tracking-tight text-primary-brown">Zone</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden xl:flex items-center space-x-8">
+                    <!-- Home Dropdown -->
+                    <div class="relative group py-2">
+                        <button class="nav-link active flex items-center gap-1.5 focus:outline-none cursor-pointer">
+                            <span>Home</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-1 w-40 hidden group-hover:block z-50">
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-neutral-light dark:border-gray-700 py-2 overflow-hidden backdrop-blur-md">
+                                <a href="index.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Home 1
+                                </a>
+                                <a href="home2.html" class="flex items-center justify-between px-4 py-2 text-sm font-bold bg-primary-brown/10 dark:bg-primary-brown/20 text-primary-brown transition-colors">
+                                    <span>Home 2</span>
+                                    <i class="fas fa-check text-xs text-primary-brown"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-link" href="about.html">About</a>
+                    <a class="nav-link" href="zones.html">Play Zones</a>
+                    <a class="nav-link" href="safety.html">Safety</a>
+                    <a class="nav-link" href="parties.html">Parties</a>
+
+                    <!-- Dashboard Dropdown -->
+                    <div class="relative group py-2">
+                        <button class="nav-link flex items-center gap-1.5 focus:outline-none cursor-pointer">
+                            <span>Dashboard</span>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200 group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute left-0 top-full pt-1 w-40 hidden group-hover:block z-50">
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-neutral-light dark:border-gray-700 py-2 overflow-hidden backdrop-blur-md">
+                                <a href="client.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Client
+                                </a>
+                                <a href="admin.html" class="block px-4 py-2 text-sm font-medium text-neutral-dark dark:text-gray-200 hover:bg-neutral-light/60 dark:hover:bg-gray-700/70 hover:text-primary-brown transition-colors">
+                                    Admin
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="nav-link" href="contact.html">Contact</a>
+                    <div class="flex gap-2 ml-4">
+                        <button id="theme-toggle" class="toggle-btn" title="Toggle theme">
+                            <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun hidden"></i>
+                        </button>
+                        <button id="rtl-toggle" class="toggle-btn" title="Toggle RTL/LTR">⇄</button>
+                    </div>
+                    <div class="flex items-center gap-3 ml-2">
+                        <a class="auth-btn login" href="login.html">Login</a>
+                        <a class="auth-btn signup" href="signup.html">Sign Up</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="mobile-toggle" class="xl:hidden text-neutral-dark dark:text-gray-300 p-2 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Full Width Alignment) -->
+        <div id="mobile-menu" class="mobile-menu xl:hidden">
+            <div class="px-4 sm:px-6 py-2">
+                <!-- Mobile Home Dropdown -->
+                <div class="border-b border-gray-100 dark:border-gray-800">
+                    <button onclick="document.getElementById('mobile-home-dropdown').classList.toggle('hidden'); document.getElementById('mobile-home-arrow').classList.toggle('rotate-180')" class="mobile-link active w-full flex items-center justify-between text-left cursor-pointer border-none bg-transparent">
+                        <span>Home</span>
+                        <i id="mobile-home-arrow" class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="mobile-home-dropdown" class="hidden bg-neutral-100/60 dark:bg-gray-800/60 rounded-xl my-1 overflow-hidden">
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="index.html">
+                            Home 1
+                        </a>
+                        <a class="mobile-link active py-2.5 pl-8 text-sm block border-none" href="home2.html">
+                            Home 2
+                        </a>
+                    </div>
+                </div>
+
+                <a class="mobile-link" href="about.html">About</a>
+                <a class="mobile-link" href="zones.html">Play Zones</a>
+                <a class="mobile-link" href="safety.html">Safety</a>
+                <a class="mobile-link" href="parties.html">Parties</a>
+
+                <!-- Mobile Dashboard Dropdown -->
+                <div class="border-b border-gray-100 dark:border-gray-800">
+                    <button onclick="document.getElementById('mobile-dash-dropdown').classList.toggle('hidden'); document.getElementById('mobile-dash-arrow').classList.toggle('rotate-180')" class="mobile-link w-full flex items-center justify-between text-left cursor-pointer border-none bg-transparent">
+                        <span>Dashboard</span>
+                        <i id="mobile-dash-arrow" class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                    </button>
+                    <div id="mobile-dash-dropdown" class="hidden bg-neutral-100/60 dark:bg-gray-800/60 rounded-xl my-1 overflow-hidden">
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="client.html">
+                            Client
+                        </a>
+                        <a class="mobile-link py-2.5 pl-8 text-sm block border-none" href="admin.html">
+                            Admin
+                        </a>
+                    </div>
+                </div>
+
+                <a class="mobile-link" href="contact.html">Contact</a>
+                <div class="flex flex-col sm:flex-row gap-3 py-6">
+                    <a class="mobile-auth-btn login flex-1 text-center" href="login.html">Login</a>
+                    <a class="mobile-auth-btn signup flex-1 text-center" href="signup.html">Sign Up</a>
+                </div>
+                <div class="flex justify-center gap-3 py-4 border-t border-gray-200 dark:border-gray-800">
+                    <button id="theme-toggle-mobile" class="toggle-btn"><i class="fas fa-moon"></i><i class="fas fa-sun hidden"></i></button>
+                    <button id="rtl-toggle-mobile" class="toggle-btn">⇄</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HOME 2 HERO ===== -->
+    <section class="pt-36 pb-16 bg-gradient-to-br from-primary-brown/5 via-background-cream to-secondary-green/5 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block px-4 py-1.5 bg-primary-brown/10 text-primary-brown font-semibold rounded-full text-sm mb-4">✨ Home 2: Adventure Edition</span>
+                    <h1 class="text-5xl lg:text-6xl font-display font-extrabold text-neutral-dark dark:text-white leading-tight mb-6">
+                        Next-Gen <span class="text-primary-brown">Indoor Fun</span> &amp; Digital Play
+                    </h1>
+                    <p class="text-xl text-neutral-dark/70 dark:text-gray-300 mb-8 leading-relaxed">
+                        Experience the ultimate fusion of soft play, high-energy obstacle courses, interactive projections, and VR adventures built for kids of all ages.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mb-8">
+                        <a href="zones.html" class="bg-primary-brown text-white font-bold px-8 py-4 rounded-2xl hover:bg-neutral-dark transition shadow-lg flex items-center gap-2">Explore Zones <i class="fas fa-arrow-right"></i></a>
+                        <a href="#hero-video" class="bg-white dark:bg-dark-card text-neutral-dark dark:text-white font-bold px-8 py-4 rounded-2xl border border-neutral-light dark:border-gray-700 hover:bg-neutral-light transition flex items-center gap-2"><i class="fas fa-play text-primary-brown"></i> Watch Video</a>
+                    </div>
+                    <div class="flex items-center gap-6 text-sm text-neutral-dark/60 dark:text-gray-400">
+                        <span><i class="fas fa-check-circle text-secondary-green mr-1"></i> Unlimited Play</span>
+                        <span><i class="fas fa-check-circle text-secondary-green mr-1"></i> Parent Cafe</span>
+                        <span><i class="fas fa-check-circle text-secondary-green mr-1"></i> Free Wi-Fi</span>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-800">
+                        <img src="assets/home2_hero_showcase.jpg" alt="Luxury Indoor Playground & Cafe" class="w-full h-[420px] object-cover" />
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-white dark:bg-dark-card p-4 rounded-2xl shadow-xl border border-neutral-light dark:border-gray-700 flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-secondary-green/20 text-secondary-green flex items-center justify-center text-xl font-bold"><i class="fas fa-trophy"></i></div>
+                        <div>
+                            <div class="font-bold text-neutral-dark dark:text-white text-sm">#1 Rated Play Zone</div>
+                            <div class="text-xs text-neutral-dark/60 dark:text-gray-400">5-Star Safety Certified</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SECTION 2: STATS & IMPACT (Play Zone By The Numbers) ===== -->
+    <section id="stats" class="py-16 bg-neutral-light/60 dark:bg-gray-900/50 border-y border-neutral-light dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase bg-primary-brown/15 text-primary-brown dark:bg-primary-brown/20 mb-3">
+                    <i class="fas fa-chart-line"></i> Proven Impact
+                </span>
+                <h2 class="text-3xl md:text-4xl font-display font-extrabold text-neutral-dark dark:text-white">
+                    Play Zone <span class="text-primary-brown">By The Numbers</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-400 mt-2 text-sm md:text-base">
+                    Trusted by thousands of active families with 5-star ratings and certified round-the-clock safety.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white dark:bg-dark-card p-8 rounded-3xl shadow-sm border border-neutral-light dark:border-gray-700">
+                    <div class="text-5xl font-display font-extrabold text-primary-brown">99.8%</div>
+                    <p class="mt-2 text-neutral-dark/70 dark:text-gray-400">“Best indoor playground ever!”</p>
+                    <p class="text-sm font-semibold mt-1">– Parent Review</p>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-8 rounded-3xl shadow-sm border border-neutral-light dark:border-gray-700">
+                    <div class="text-5xl font-display font-extrabold text-secondary-green">12K+</div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 mt-2">Monthly visitors</p>
+                    <div class="w-full bg-neutral-light dark:bg-gray-700 h-2 rounded-full mt-4"><div class="w-3/4 bg-secondary-green h-2 rounded-full"></div></div>
+                    <p class="text-xs text-gray-400 mt-1">75% repeat rate</p>
+                </div>
+                <div class="bg-white dark:bg-dark-card p-8 rounded-3xl shadow-sm border border-neutral-light dark:border-gray-700">
+                    <div class="text-5xl font-display font-extrabold text-accent-orange">24/7</div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 mt-2">Safety monitoring</p>
+                    <div class="flex items-center justify-center gap-1 mt-3 text-primary-brown"><i class="fas fa-shield-alt"></i><i class="fas fa-shield-alt"></i><i class="fas fa-shield-alt"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOME 2 FEATURES GRID ===== -->
+    <section class="py-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-4xl font-display font-bold text-neutral-dark dark:text-white">Why Families Choose <span class="text-primary-brown">Us</span></h2>
+                <p class="text-neutral-dark/70 dark:text-gray-400 mt-3">Designed with active play elements, advanced safety padding, and comfortable lounges for parents.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-dark-card p-6 md:p-8 rounded-3xl shadow-md border border-neutral-light dark:border-gray-700 hover:-translate-y-2 transition flex flex-col justify-between h-full">
+                    <div>
+                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="assets/home2_vr_play.jpg" alt="VR & Interactive Play" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-3">VR &amp; Interactive Play</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400">Floor projection games, interactive digital walls, and safe kid-friendly VR adventures.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card p-6 md:p-8 rounded-3xl shadow-md border border-neutral-light dark:border-gray-700 hover:-translate-y-2 transition flex flex-col justify-between h-full">
+                    <div>
+                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="assets/home2_high_ropes.jpg" alt="High Ropes & Climbing" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-3">High Ropes &amp; Climbing</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400">Harness-secured climbing walls and low-height ninja challenge courses for active kids.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-dark-card p-6 md:p-8 rounded-3xl shadow-md border border-neutral-light dark:border-gray-700 hover:-translate-y-2 transition flex flex-col justify-between h-full">
+                    <div>
+                        <div class="h-48 rounded-2xl overflow-hidden mb-6 relative">
+                            <img src="assets/home2_parent_lounge.jpg" alt="Parent Relax Lounge" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-3">Parent Relax Lounge</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400">Gourmet coffee, high-speed Wi-Fi, clear view lines to all play areas, and quiet work pods.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEW SECTION 1: INTERACTIVE TICKET & ADVENTURE PASSES ===== -->
+    <section id="passes" class="py-20 bg-gradient-to-br from-background-cream via-white to-secondary-green/10 dark:from-gray-900 dark:via-dark-card dark:to-gray-900 scroll-mt-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase bg-secondary-green/15 text-secondary-green dark:bg-secondary-green/20 mb-4">
+                    <i class="fas fa-ticket-alt"></i> Instant Explorer Passes
+                </span>
+                <h2 class="text-4xl md:text-5xl font-display font-extrabold text-neutral-dark dark:text-white">
+                    Choose Your <span class="text-primary-brown">Adventure Pass</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 mt-4 text-base md:text-lg">
+                    Flexible options for open play sessions, high-octane VR packages, and VIP weekend events.
+                </p>
+            </div>
+
+            <!-- Pass Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Pass 1 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-8 shadow-xl border border-neutral-light dark:border-gray-700 relative flex flex-col justify-between hover:-translate-y-2 transition-all duration-300">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300">Standard Play</span>
+                            <i class="fas fa-child text-2xl text-primary-brown"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-2">Single Explorer Pass</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">Perfect for 2 hours of open soft play and obstacle exploration.</p>
+                        <div class="text-4xl font-display font-extrabold text-primary-brown mb-6">$19 <span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/ 2 Hours</span></div>
+                        <ul class="space-y-3 text-sm text-neutral-dark/80 dark:text-gray-300 mb-8 border-t border-neutral-light dark:border-gray-800 pt-6">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Access to Toddler &amp; Adventure Zones</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Free Grip Socks Included</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>1 Free Parent Entry Included</span></li>
+                        </ul>
+                    </div>
+                    <a href="login.html" class="w-full text-center py-3.5 px-6 rounded-2xl border-2 border-primary-brown text-primary-brown font-bold hover:bg-primary-brown hover:text-white transition">Select Explorer Pass</a>
+                </div>
+
+                <!-- Pass 2 (Featured) -->
+                <div class="bg-gradient-to-b from-primary-brown/10 via-white to-white dark:from-gray-800 dark:via-dark-card dark:to-dark-card rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-primary-brown relative flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 lg:transform lg:scale-105">
+                    <div>
+                        <div class="flex justify-between items-center mb-6 pt-2">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-primary-brown/20 text-primary-brown dark:bg-primary-brown/30">All-Access</span>
+                            <i class="fas fa-vr-cardboard text-2xl text-secondary-green"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-2">Cyber Ninja VIP Pass</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">Unlimited play plus climbing walls, VR arena, and ninja courses.</p>
+                        <div class="text-4xl font-display font-extrabold text-primary-brown mb-6">$32 <span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/ Day Pass</span></div>
+                        <ul class="space-y-3 text-sm text-neutral-dark/80 dark:text-gray-300 mb-8 border-t border-neutral-light dark:border-gray-800 pt-6">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Unlimited All-Zone Play Time</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>High Ropes &amp; Climbing Wall Access</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>30-Min Virtual Reality Arcade Gaming</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>10% Discount at Parent Lounge Cafe</span></li>
+                        </ul>
+                    </div>
+                    <a href="login.html" class="w-full text-center py-3.5 px-6 rounded-2xl bg-primary-brown text-white font-bold hover:bg-neutral-dark transition shadow-lg">Claim VIP Pass</a>
+                </div>
+
+                <!-- Pass 3 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-6 sm:p-8 shadow-xl border border-neutral-light dark:border-gray-700 relative flex flex-col justify-between hover:-translate-y-2 transition-all duration-300">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="px-3.5 py-1 rounded-full text-xs font-bold bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300">Family Saver</span>
+                            <i class="fas fa-users text-2xl text-accent-orange"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-2">Weekend Glow Party Bundle</h3>
+                        <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">Group access for 4 kids with neon lights, DJ music, and pizza included.</p>
+                        <div class="text-4xl font-display font-extrabold text-primary-brown mb-6">$89 <span class="text-sm font-normal text-neutral-dark/60 dark:text-gray-400">/ 4 Kids</span></div>
+                        <ul class="space-y-3 text-sm text-neutral-dark/80 dark:text-gray-300 mb-8 border-t border-neutral-light dark:border-gray-800 pt-6">
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Entry for 4 Children + 2 Adults</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Glow Gear &amp; Face Paint Kit</span></li>
+                            <li class="flex items-start gap-2.5"><i class="fas fa-check-circle text-secondary-green shrink-0 mt-1"></i> <span>Large Pizza &amp; Drinks Included</span></li>
+                        </ul>
+                    </div>
+                    <a href="login.html" class="w-full text-center py-3.5 px-6 rounded-2xl border-2 border-primary-brown text-primary-brown font-bold hover:bg-primary-brown hover:text-white transition">Book Family Bundle</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEW SECTION 2: 3D SPATIAL ZONE MAP & SECTOR RADAR ===== -->
+    <section id="floor-radar" class="py-20 bg-neutral-light/70 dark:bg-gray-900 scroll-mt-20">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase bg-primary-brown/15 text-primary-brown dark:bg-primary-brown/20 mb-4">
+                    <i class="fas fa-map-marked-alt"></i> Interactive Playground Radar
+                </span>
+                <h2 class="text-4xl md:text-5xl font-display font-extrabold text-neutral-dark dark:text-white">
+                    Explore Our <span class="text-secondary-green">4 Play Sectors</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 mt-4 text-base md:text-lg">
+                    Discover specialized play arenas equipped with age-tailored safety padding, auto-belay climbing rigs, and quiet parent hubs.
+                </p>
+            </div>
+
+            <!-- Spatial Radar Grid (4 Distinct Sectors) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Sector 1 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-xl border-l-8 border-primary-brown hover:shadow-2xl transition-all duration-300 group">
+                    <div class="flex items-start justify-between gap-3 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-primary-brown/15 text-primary-brown flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform shrink-0">
+                                01
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-neutral-dark dark:text-white">Sector Alpha: Trampoline Kingdom</h3>
+                                <p class="text-xs text-primary-brown font-semibold uppercase tracking-wider">High-Flying Air Arena</p>
+                            </div>
+                        </div>
+                        <span class="whitespace-nowrap shrink-0 px-3 py-1 bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 rounded-full text-xs font-bold">Zone 1</span>
+                    </div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">
+                        Continuous angled trampoline beds, giant foam pit launchpads, dodgeball arenas, and slam dunk basketball hoops.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 text-center border-t border-neutral-light dark:border-gray-800 pt-6 text-xs font-semibold text-neutral-dark/80 dark:text-gray-300">
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-shield-alt text-primary-brown block mb-1 text-base"></i> ASTM Certified</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-user-friends text-secondary-green block mb-1 text-base"></i> Ages 4+</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-clock text-accent-orange block mb-1 text-base"></i> Open All Day</div>
+                    </div>
+                </div>
+
+                <!-- Sector 2 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-xl border-l-8 border-secondary-green hover:shadow-2xl transition-all duration-300 group">
+                    <div class="flex items-start justify-between gap-3 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-secondary-green/15 text-secondary-green flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform shrink-0">
+                                02
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-neutral-dark dark:text-white">Sector Beta: Cyber VR & Laser Arena</h3>
+                                <p class="text-xs text-secondary-green font-semibold uppercase tracking-wider">Next-Gen Digital Play</p>
+                            </div>
+                        </div>
+                        <span class="whitespace-nowrap shrink-0 px-3 py-1 bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 rounded-full text-xs font-bold">Zone 2</span>
+                    </div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">
+                        Wireless VR headsets, multi-level fog laser tag maze, projection floor games, and haptic feedback vests.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 text-center border-t border-neutral-light dark:border-gray-800 pt-6 text-xs font-semibold text-neutral-dark/80 dark:text-gray-300">
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-vr-cardboard text-primary-brown block mb-1 text-base"></i> VR Rigged</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-bolt text-secondary-green block mb-1 text-base"></i> Ages 7-12</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-trophy text-accent-orange block mb-1 text-base"></i> Leaderboard</div>
+                    </div>
+                </div>
+
+                <!-- Sector 3 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-xl border-l-8 border-accent-orange hover:shadow-2xl transition-all duration-300 group">
+                    <div class="flex items-start justify-between gap-3 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-accent-orange/15 text-accent-orange flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform shrink-0">
+                                03
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-neutral-dark dark:text-white">Sector Gamma: High Ropes & Climbing</h3>
+                                <p class="text-xs text-accent-orange font-semibold uppercase tracking-wider">Agility & Confidence</p>
+                            </div>
+                        </div>
+                        <span class="whitespace-nowrap shrink-0 px-3 py-1 bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 rounded-full text-xs font-bold">Zone 3</span>
+                    </div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">
+                        Auto-belay climbing walls with 12 themed routes, sky-high ropes obstacle courses, and a thrilling zip-line descent.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 text-center border-t border-neutral-light dark:border-gray-800 pt-6 text-xs font-semibold text-neutral-dark/80 dark:text-gray-300">
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-user-shield text-primary-brown block mb-1 text-base"></i> Auto-Belay</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-mountain text-secondary-green block mb-1 text-base"></i> 12 Routes</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-certificate text-accent-orange block mb-1 text-base"></i> Rigger Certified</div>
+                    </div>
+                </div>
+
+                <!-- Sector 4 -->
+                <div class="bg-white dark:bg-dark-card rounded-3xl p-8 shadow-xl border-l-8 border-primary-brown hover:shadow-2xl transition-all duration-300 group">
+                    <div class="flex items-start justify-between gap-3 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-primary-brown/15 text-primary-brown flex items-center justify-center text-2xl font-bold group-hover:scale-110 transition-transform shrink-0">
+                                04
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-neutral-dark dark:text-white">Sector Delta: Cosmic Toddler Bay</h3>
+                                <p class="text-xs text-primary-brown font-semibold uppercase tracking-wider">Gentle Soft Play Sanctuary</p>
+                            </div>
+                        </div>
+                        <span class="whitespace-nowrap shrink-0 px-3 py-1 bg-neutral-light dark:bg-gray-800 text-neutral-dark dark:text-gray-300 rounded-full text-xs font-bold">Zone 4</span>
+                    </div>
+                    <p class="text-neutral-dark/70 dark:text-gray-400 text-sm mb-6">
+                        Zero-edge foam blocks, interactive light-up wall buttons, soft slides, and quiet private baby nursing suites.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3 text-center border-t border-neutral-light dark:border-gray-800 pt-6 text-xs font-semibold text-neutral-dark/80 dark:text-gray-300">
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-baby text-primary-brown block mb-1 text-base"></i> Ages 0-3</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-pump-soap text-secondary-green block mb-1 text-base"></i> Sanitized 1hr</div>
+                        <div class="bg-neutral-light/60 dark:bg-gray-800/60 py-2 rounded-xl"><i class="fas fa-heart text-accent-orange block mb-1 text-base"></i> Nursing Suite</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- ===== CALL TO ACTION ===== -->
+    <section class="py-20 bg-primary-brown dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-4xl font-display font-bold text-white mb-4">Ready for the <span class="text-secondary-green">Ultimate</span> Playdate?</h2>
+            <p class="text-white/80 max-w-xl mx-auto mb-8">Book your tickets now and get a free VR session for every child. Limited offer!</p>
+            <a href="login.html" class="inline-block bg-white text-primary-brown font-bold px-12 py-4 rounded-full hover:bg-secondary-green hover:text-white transition shadow-xl">Get Passes <i class="fas fa-arrow-right ml-2"></i></a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="py-16 bg-white dark:bg-gray-900 border-t border-neutral-light dark:border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                <div class="text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-child text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-display font-bold text-neutral-dark dark:text-white">Kids</span>
+                            <span class="text-2xl font-display font-bold text-primary-brown">Zone</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-neutral-dark/80 dark:text-gray-300">Where little adventurers explore, learn, and make friends in a safe indoor playground.</p>
+                    <div class="flex space-x-3 justify-center sm:justify-start mt-6">
+                        <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 text-neutral-dark dark:text-white">Quick Links</h3>
+                    <ul class="space-y-2 text-sm text-neutral-dark/80 dark:text-gray-300">
+                        <li><a class="hover:text-primary-brown transition" href="index.html">Home 1</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="home2.html">Home 2</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html">Play Zones</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="safety.html">Safety</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="parties.html">Parties</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 text-neutral-dark dark:text-white">Zones</h3>
+                    <ul class="space-y-2 text-sm text-neutral-dark/80 dark:text-gray-300">
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=0-3">Toddler (0-3)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=4-7">Kids (4-7)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html?age=8-12">Pre-teen (8-12)</a></li>
+                        <li><a class="hover:text-primary-brown transition" href="zones.html">All Zones</a></li>
+                    </ul>
+                </div>
+
+                <div class="text-center sm:text-left">
+                    <h3 class="text-xl font-bold mb-5 text-neutral-dark dark:text-white">Contact</h3>
+                    <ul class="space-y-3 text-sm text-neutral-dark/80 dark:text-gray-300">
+                        <li class="flex items-start justify-center sm:justify-start gap-2.5">
+                            <i class="fa-solid fa-location-dot text-primary-brown w-5 shrink-0 mt-1"></i>
+                            <span>123 Play Street, Fun City</span>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-phone text-primary-brown w-5 shrink-0"></i>
+                            <a href="tel:+15557891234" class="hover:text-primary-brown transition whitespace-nowrap">+1 (555) 789-1234</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-envelope text-primary-brown w-5 shrink-0"></i>
+                            <a href="mailto:hello@kidsplayzone.com" class="hover:text-primary-brown transition whitespace-nowrap">hello@kidsplayzone.com</a>
+                        </li>
+                        <li class="flex items-center justify-center sm:justify-start gap-2.5">
+                            <i class="fas fa-clock text-primary-brown w-5 shrink-0"></i>
+                            <span class="whitespace-nowrap">Mon–Sun: 9:00 – 20:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>          </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
+                <p class="text-sm opacity-75 dark:opacity-70">&copy; 2026 Kids Play Zone - Home 2 Experience. Made with <i class="fas fa-heart text-primary-brown mx-1"></i> for little adventurers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle?.querySelector('.fa-moon');
+            const themeIconSun = themeToggle?.querySelector('.fa-sun');
+            const mobileThemeToggle = document.getElementById('theme-toggle-mobile');
+            const mobileThemeIcon = mobileThemeToggle?.querySelector('.fa-moon');
+            const mobileThemeIconSun = mobileThemeToggle?.querySelector('.fa-sun');
+
+            function toggleTheme() {
+                document.documentElement.classList.toggle('dark');
+                const isDark = document.documentElement.classList.contains('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.toggle('hidden', isDark));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.toggle('hidden', !isDark));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.toggle('active', isDark));
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                [themeIcon, mobileThemeIcon].forEach(el => el?.classList.add('hidden'));
+                [themeIconSun, mobileThemeIconSun].forEach(el => el?.classList.remove('hidden'));
+                [themeToggle, mobileThemeToggle].forEach(el => el?.classList.add('active'));
+            }
+
+            // RTL Toggle
+            const rtlToggle = document.getElementById('rtl-toggle');
+            const mobileRtlToggle = document.getElementById('rtl-toggle-mobile');
+            function toggleRTL() {
+                const isRTL = document.documentElement.dir === 'rtl';
+                document.documentElement.dir = isRTL ? 'ltr' : 'rtl';
+                document.documentElement.lang = isRTL ? 'en' : 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => {
+                    if (el) { el.textContent = '⇄'; el.classList.toggle('active', !isRTL); }
+                });
+                localStorage.setItem('dir', isRTL ? 'ltr' : 'rtl');
+            }
+            if (rtlToggle) rtlToggle.addEventListener('click', toggleRTL);
+            if (mobileRtlToggle) mobileRtlToggle.addEventListener('click', toggleRTL);
+            if (localStorage.getItem('dir') === 'rtl') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+                [rtlToggle, mobileRtlToggle].forEach(el => { if (el) { el.textContent = '⇄'; el.classList.add('active'); } });
+            }
+
+            // Mobile Menu
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileIcon = document.querySelector('#mobile-toggle i');
+            if (mobileToggle && mobileMenu) {
+                mobileToggle.addEventListener('click', () => {
+                    const isOpen = mobileMenu.classList.toggle('open');
+                    if (mobileIcon) mobileIcon.className = isOpen ? 'fas fa-times text-xl' : 'fas fa-bars text-xl';
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                });
+            }
+
+            // Close mobile menu on link click (excluding accordion buttons)
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (link.tagName === 'BUTTON' || link.closest('button')) return;
+                    if (mobileMenu) mobileMenu.classList.remove('open');
+                    if (mobileIcon) mobileIcon.className = 'fas fa-bars text-xl';
+                    document.body.style.overflow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
