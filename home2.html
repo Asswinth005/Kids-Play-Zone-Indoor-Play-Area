@@ -103,6 +103,42 @@
         .dark .mobile-auth-btn.login { background: #FF6B35; border-color: #FF6B35; color: #ffffff; }
         .mobile-auth-btn.login:hover { background: #E0531F; border-color: #E0531F; color: #ffffff; }
 
+        /* --- PLAY CARD & BUTTONS --- */
+        .play-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 30px rgba(141, 110, 99, 0.08);
+            border: 1px solid rgba(141, 110, 99, 0.10);
+        }
+        .dark .play-card {
+            background: #1E293B;
+            border-color: #334155;
+        }
+        .play-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 30px 60px rgba(255, 107, 53, 0.18);
+        }
+
+        .btn-brown {
+            background: #FF6B35;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.25);
+        }
+        .btn-brown:hover {
+            background: #E0531F;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.35);
+        }
+
         /* SOCIAL ICONS */
         .social-icon {
             display: inline-flex;
@@ -362,6 +398,169 @@
                         </div>
                         <h3 class="text-2xl font-bold text-neutral-dark dark:text-white mb-3">Parent Relax Lounge</h3>
                         <p class="text-neutral-dark/70 dark:text-gray-400">Gourmet coffee, high-speed Wi-Fi, clear view lines to all play areas, and quiet work pods.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== POPULAR EXPERIENCES & ACTIVITIES ===== -->
+    <section id="activities" class="py-20 bg-neutral-light/50 dark:bg-gray-900/60 border-t border-neutral-light dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase bg-secondary-green/10 text-secondary-green dark:bg-secondary-green/20 mb-3">
+                    <i class="fas fa-grin-stars text-secondary-green"></i> Unforgettable Fun
+                </span>
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-dark dark:text-white">
+                    Popular <span class="text-secondary-green">Play Experiences</span>
+                </h2>
+                <p class="text-neutral-dark/70 dark:text-gray-300 mt-3 text-base md:text-lg">
+                    Discover high-flying trampolines, virtual reality arenas, obstacle courses, and parent lounges crafted for maximum joy!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Activity 1 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/home2_high_ropes.jpg" alt="Sky-High Ropes & Zip Line" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-primary-brown text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            ★ High Energy
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-primary-brown transition-colors">
+                                Sky Ropes &amp; Zip Course
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                Test balance and bravery on safe suspension bridges and high-flying zip landings with full harness systems.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-child text-primary-brown mr-1"></i> Ages 6+</span>
+                            <span class="text-secondary-green font-bold"><i class="fas fa-shield-alt mr-1"></i> Dual Harness</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/home2_vr_play.jpg" alt="Virtual Reality & Arcade" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-secondary-green text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            ⚡ Next-Gen Tech
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-secondary-green transition-colors">
+                                VR &amp; Interactive Arcade
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                Immerse in kid-safe 3D motion games, interactive floor projections, and active multiplayer challenges.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-gamepad text-secondary-green mr-1"></i> All Ages</span>
+                            <span class="text-primary-brown font-bold"><i class="fas fa-vr-cardboard mr-1"></i> 10+ Games</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 3 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/pa1.jpg" alt="Trampoline Dodgeball Arena" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            🔥 Top Favorite
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-amber-500 transition-colors">
+                                Trampoline Dodgeball
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                Wall-to-wall high-rebound trampolines with padded walls and foam pits for active, energetic play.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-running text-amber-500 mr-1"></i> Active Play</span>
+                            <span class="text-secondary-green font-bold"><i class="fas fa-check-circle mr-1"></i> Padded Pits</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 4 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/adventure_zone.jpg" alt="Mega Soft Play Obstacle Fortress" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-primary-brown text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            🏰 Multi-Story
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-primary-brown transition-colors">
+                                Mega Obstacle Fortress
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                4-story padded maze with giant spiral wave slides, rope bridges, ball cannons, and secret tunnels.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-cubes text-primary-brown mr-1"></i> Ages 3–10</span>
+                            <span class="text-secondary-green font-bold"><i class="fas fa-shield-alt mr-1"></i> ASTM Certified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 5 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/pa2.jpg" alt="Creative Sensory & Craft Corner" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-secondary-green text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            🎨 Creative Studio
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-secondary-green transition-colors">
+                                Toddler Sensory Corner
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                Soft foam building blocks, tactile discovery walls, gentle rocking animals, and interactive sensory sound buttons.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-baby text-secondary-green mr-1"></i> Ages 0–3</span>
+                            <span class="text-primary-brown font-bold"><i class="fas fa-sparkles mr-1"></i> Non-Toxic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity 6 -->
+                <div class="play-card flex flex-col h-full group">
+                    <div class="h-60 overflow-hidden relative shrink-0">
+                        <img src="assets/home2_parent_lounge.jpg" alt="Parent Lounge & Gourmet Café" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            ☕ Parent Retreat
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-neutral-dark dark:text-white group-hover:text-emerald-600 transition-colors">
+                                Parent Lounge &amp; Café
+                            </h3>
+                            <p class="text-neutral-dark/70 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                Relax with premium espresso drinks, organic snacks, charging stations, and clear sightlines of all play arenas.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-neutral-light dark:border-gray-800 text-xs">
+                            <span class="text-neutral-dark/70 dark:text-gray-400"><i class="fas fa-wifi text-emerald-600 mr-1"></i> High-Speed Wi-Fi</span>
+                            <span class="text-primary-brown font-bold"><i class="fas fa-mug-hot mr-1"></i> Gourmet Menu</span>
+                        </div>
                     </div>
                 </div>
             </div>
