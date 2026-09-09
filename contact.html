@@ -184,34 +184,32 @@
         .toggle-btn.active { background: #8D6E63; color: white; }
 
         .auth-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 0.6rem 1.6rem;
+            border-radius: 10px;
+            font-weight: 600;
             transition: all 0.3s ease;
             border: 1px solid transparent;
             white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(141, 110, 99, 0.25);
         }
-        .auth-btn.login { background: transparent; border-color: #d7ccc8; color: #5D4037; }
-        .dark .auth-btn.login { border-color: #4b5563; color: #d1d5db; }
-        .auth-btn.login:hover { border-color: #8D6E63; color: #8D6E63; }
-        .auth-btn.signup { background: #8D6E63; color: white; }
-        .auth-btn.signup:hover { background: #6D4C41; transform: translateY(-2px); }
+        .auth-btn.login { background: #8D6E63; border-color: #8D6E63; color: #ffffff; }
+        .dark .auth-btn.login { background: #8D6E63; border-color: #8D6E63; color: #ffffff; }
+        .auth-btn.login:hover { background: #6D4C41; border-color: #6D4C41; color: #ffffff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(141, 110, 99, 0.4); }
 
         .mobile-auth-btn {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            font-weight: 500;
-            border-radius: 8px;
+            font-weight: 600;
+            border-radius: 10px;
             transition: all 0.3s ease;
             text-align: center;
             margin: 0.25rem;
             border: 1px solid transparent;
+            box-shadow: 0 4px 12px rgba(141, 110, 99, 0.25);
         }
-        .mobile-auth-btn.login { background: transparent; border-color: #d7ccc8; color: #5D4037; }
-        .dark .mobile-auth-btn.login { border-color: #4b5563; color: #d1d5db; }
-        .mobile-auth-btn.login:hover { background: #8D6E63; color: white; border-color: #8D6E63; }
-        .mobile-auth-btn.signup { background: #8D6E63; color: white; }
-        .mobile-auth-btn.signup:hover { background: #6D4C41; }
+        .mobile-auth-btn.login { background: #8D6E63; border-color: #8D6E63; color: #ffffff; }
+        .dark .mobile-auth-btn.login { background: #8D6E63; border-color: #8D6E63; color: #ffffff; }
+        .mobile-auth-btn.login:hover { background: #6D4C41; border-color: #6D4C41; color: #ffffff; }
 
         /* --- SOCIAL ICONS (same) --- */
         .social-icon {
@@ -386,8 +384,7 @@
                         <button id="rtl-toggle" class="toggle-btn" title="Toggle RTL/LTR">⇄</button>
                     </div>
                     <div class="flex items-center gap-3 ml-2">
-                        <a class="auth-btn login" href="login.html">Login</a>
-                        <a class="auth-btn signup" href="signup.html">Sign Up</a>
+                        <a class="auth-btn login" href="login.html">Register</a>
                     </div>
                 </div>
 
@@ -432,8 +429,7 @@
 
                 <a class="mobile-link active" href="contact.html">Contact</a>
                 <div class="flex flex-col sm:flex-row gap-3 py-6">
-                    <a class="mobile-auth-btn login flex-1 text-center" href="login.html">Login</a>
-                    <a class="mobile-auth-btn signup flex-1 text-center" href="signup.html">Sign Up</a>
+                    <a class="mobile-auth-btn login flex-1 text-center" href="login.html">Register</a>
                 </div>
                 <div class="flex justify-center gap-3 py-4 border-t border-gray-200 dark:border-gray-800">
                     <button id="theme-toggle-mobile" class="toggle-btn"><i class="fas fa-moon"></i><i class="fas fa-sun hidden"></i></button>
