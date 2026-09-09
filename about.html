@@ -413,20 +413,20 @@
     </section>
 
     <!-- ===== OUR STORY (new layout) ===== -->
-    <section id="story" class="py-20 md:py-28 bg-background-cream dark:bg-gray-900/30 scroll-mt-20">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section id="story" class="py-16 md:py-24 bg-background-cream dark:bg-gray-900/30 scroll-mt-20 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
                 <div class="animate-slide-up">
                     <span class="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase bg-primary-brown/10 text-primary-brown dark:bg-primary-brown/20 mb-4">
                         <i class="fas fa-flag mr-2"></i> Since 2012
                     </span>
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-dark dark:text-white leading-tight">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-neutral-dark dark:text-white leading-tight">
                         Built with <span class="text-primary-brown">Love</span> &amp; <span class="text-secondary-green">Laughter</span>
                     </h2>
-                    <p class="text-lg text-neutral-dark/70 dark:text-gray-300 mt-4 leading-relaxed">
+                    <p class="text-base sm:text-lg text-neutral-dark/70 dark:text-gray-300 mt-4 leading-relaxed">
                         Kids Play Zone was born from a simple idea: every child deserves a space where they can be boldly curious, safely active, and joyfully themselves. What started as a small community playroom has grown into a 15,000 sq ft indoor adventure hub, but our heart remains the same.
                     </p>
-                    <p class="text-lg text-neutral-dark/70 dark:text-gray-300 mt-3 leading-relaxed">
+                    <p class="text-base sm:text-lg text-neutral-dark/70 dark:text-gray-300 mt-3 leading-relaxed">
                         We partner with child development experts to design zones that nurture physical, cognitive, and social growth — all while keeping fun at the center.
                     </p>
                     <div class="flex flex-wrap gap-4 mt-6">
@@ -434,13 +434,16 @@
                         <a href="contact.html" class="text-primary-brown font-semibold flex items-center hover:underline">Get in touch <i class="fas fa-chevron-right ml-2 text-sm"></i></a>
                     </div>
                 </div>
-                <div class="relative animate-slide-up" style="animation-delay:0.15s">
+                <div class="relative animate-slide-up pr-4 pb-4 sm:pr-6 sm:pb-6" style="animation-delay:0.15s">
                     <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-gray-700">
-                        <img src="assets/about_story.jpg" alt="Kids & Parents at Kids Play Zone" class="w-full h-[380px] md:h-[420px] object-cover" />
+                        <img src="assets/about_story.jpg" alt="Kids & Parents at Kids Play Zone" class="w-full h-[300px] sm:h-[380px] md:h-[420px] object-cover" />
                     </div>
-                    <div class="absolute -bottom-6 -right-6 bg-white dark:bg-dark-card rounded-2xl shadow-xl p-5 flex items-center gap-4 border border-neutral-light dark:border-gray-700">
-                        <div class="bg-secondary-green/10 p-3 rounded-full text-secondary-green"><i class="fas fa-smile text-2xl"></i></div>
-                        <div><span class="block text-2xl font-bold text-neutral-dark dark:text-white">10K+</span><span class="text-sm text-neutral-dark/60 dark:text-gray-400">Happy families</span></div>
+                    <div class="absolute bottom-0 right-0 bg-white dark:bg-dark-card rounded-2xl shadow-xl p-3.5 sm:p-5 flex items-center gap-3 sm:gap-4 border border-neutral-light dark:border-gray-700 max-w-[calc(100%-1.5rem)]">
+                        <div class="bg-secondary-green/10 p-2.5 sm:p-3 rounded-full text-secondary-green shrink-0"><i class="fas fa-smile text-xl sm:text-2xl"></i></div>
+                        <div>
+                            <span class="block text-xl sm:text-2xl font-bold text-neutral-dark dark:text-white leading-none">10K+</span>
+                            <span class="text-xs sm:text-sm text-neutral-dark/60 dark:text-gray-400 whitespace-nowrap mt-1 block">Happy families</span>
+                        </div>
                     </div>
                 </div>
             </div>
