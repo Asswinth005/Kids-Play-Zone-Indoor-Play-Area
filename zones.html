@@ -318,6 +318,20 @@
             color: #FF6B35;
             width: 1.2rem;
         }
+
+        /* --- TYPOGRAPHY HIERARCHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600 !important;
+        }
+        h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+            font-weight: inherit !important;
+        }
+        .subheading,
+        .section-subtitle,
+        .welcome-subtitle,
+        h1 + p, h2 + p, h3 + p {
+            font-weight: 450;
+        }
     </style>
 </head>
 <body>
@@ -325,7 +339,7 @@
     <!-- ===== NAVIGATION (exact copy from reference) ===== -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-neutral-light dark:border-gray-800">
         <div class="container mx-auto px-4 sm:px-6">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <a class="flex items-center space-x-3 group" href="index.html">
                     <div class="w-10 h-10 bg-primary-brown rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300">

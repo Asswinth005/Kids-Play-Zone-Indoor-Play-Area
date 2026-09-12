@@ -309,6 +309,20 @@
         }
         [dir="rtl"] .text-left { text-align: right !important; }
         [dir="rtl"] .text-right { text-align: left !important; }
+
+        /* --- TYPOGRAPHY HIERARCHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600 !important;
+        }
+        h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+            font-weight: inherit !important;
+        }
+        .subheading,
+        .section-subtitle,
+        .welcome-subtitle,
+        h1 + p, h2 + p, h3 + p {
+            font-weight: 450;
+        }
     </style>
 </head>
 <body>

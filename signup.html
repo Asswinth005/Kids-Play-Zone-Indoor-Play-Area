@@ -373,7 +373,7 @@
         .welcome-title {
             font-family: 'Outfit', sans-serif;
             font-size: 1.6rem;
-            font-weight: 700;
+            font-weight: 600;
             color: #1E293B;
             margin-top: 1.75rem;
             margin-bottom: 0.1rem;
@@ -387,6 +387,7 @@
 
         .welcome-subtitle {
             font-size: 0.85rem;
+            font-weight: 450;
             color: #FF6B35;
             text-align: center;
             margin-bottom: 0.5rem;
@@ -394,6 +395,20 @@
 
         .dark .welcome-subtitle {
             color: #FF6B35;
+        }
+
+        /* --- TYPOGRAPHY HIERARCHY --- */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600 !important;
+        }
+        h1 span, h2 span, h3 span, h4 span, h5 span, h6 span {
+            font-weight: inherit !important;
+        }
+        .subheading,
+        .section-subtitle,
+        .welcome-subtitle,
+        h1 + p, h2 + p, h3 + p {
+            font-weight: 450;
         }
 
         /* terms text style */
